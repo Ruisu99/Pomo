@@ -1,0 +1,17 @@
+name: Deploy
+
+on:
+  push:
+    branches: [main]
+
+jobs:
+  vercel-hint:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Note
+        run: |
+          echo "Connect this GitHub repo to Vercel for automatic production deploys."
+          echo "Suggested Vercel settings:"
+          echo "- Framework Preset: Next.js"
+          echo "- Root Directory: apps/web"
+          echo "This workflow is intentionally lightweight; Vercel handles hosting."

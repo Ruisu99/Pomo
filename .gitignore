@@ -1,0 +1,29 @@
+# Dependencies
+node_modules
+.pnpm-store
+
+# Next.js
+apps/web/.next
+apps/web/out
+
+# Build
+packages/core/dist
+
+# Env
+.env
+.env*.local
+
+# OS
+.DS_Store
+
+# IDE
+.idea
+.vscode
+
+# TypeScript
+*.tsbuildinfo
+
+# PWA
+apps/web/public/sw.js
+apps/web/public/workbox-*.js
+apps/web/public/fallback-*.js
