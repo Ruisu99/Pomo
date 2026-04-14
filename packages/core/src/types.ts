@@ -21,7 +21,12 @@ export type ThemeMode = "light" | "dark" | "system";
 
 export type Language = "en" | "de";
 
-export type BackgroundPreset = "solid" | "pomoRed" | "customImage";
+export type BackgroundPreset =
+  | "solid"
+  | "pomoRed"
+  | "pomoSlate"
+  | "pomoGold"
+  | "customImage";
 
 export type Settings = {
   workDuration: number;

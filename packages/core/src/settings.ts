@@ -11,7 +11,7 @@ export const DEFAULT_SETTINGS: Settings = {
   theme: "system",
   language: "en",
   backgroundPreset: "pomoRed",
-  backgroundSolid: "#a90000",
+  backgroundSolid: "#df3c3c",
   backgroundImageDataUrl: null,
 };
 
@@ -19,6 +19,8 @@ export function clampSettings(partial: Partial<Settings>): Settings {
   const s = { ...DEFAULT_SETTINGS, ...partial };
   const preset =
     s.backgroundPreset === "pomoRed" ||
+    s.backgroundPreset === "pomoSlate" ||
+    s.backgroundPreset === "pomoGold" ||
     s.backgroundPreset === "customImage" ||
     s.backgroundPreset === "solid"
       ? s.backgroundPreset

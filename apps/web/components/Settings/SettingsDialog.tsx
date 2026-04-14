@@ -20,14 +20,6 @@ import { t } from "@/lib/i18n";
 import { cn } from "@/lib/utils";
 import { useAppStore } from "@/store/app-store";
 
-function minutesFromSeconds(s: number): number {
-  return Math.round(s / 60);
-}
-
-function secondsFromMinutes(m: number): number {
-  return Math.max(1, Math.round(m)) * 60;
-}
-
 export function SettingsDialog() {
   const [open, setOpen] = useState(false);
   const settings = useAppStore((s) => s.settings);
@@ -55,89 +47,6 @@ export function SettingsDialog() {
         </DialogHeader>
 
         <div className="space-y-6">
-          <div className="space-y-2">
-            <div className="flex items-center justify-between gap-4">
-              <div>
-                <Label>{t(lang, "settings_focus_length")}</Label>
-                <p className="text-xs text-[var(--color-muted)]">
-                  {minutesFromSeconds(settings.workDuration)}{" "}
-                  {t(lang, "settings_minutes")}
-                </p>
-              </div>
-            </div>
-            <Slider
-              value={[minutesFromSeconds(settings.workDuration)]}
-              min={5}
-              max={90}
-              step={1}
-              onValueChange={(v) =>
-                patchSettings({ workDuration: secondsFromMinutes(v[0] ?? 25) })
-              }
-            />
-          </div>
-
-          <div className="space-y-2">
-            <div className="flex items-center justify-between gap-4">
-              <div>
-                <Label>{t(lang, "settings_short_break")}</Label>
-                <p className="text-xs text-[var(--color-muted)]">
-                  {minutesFromSeconds(settings.shortBreak)}{" "}
-                  {t(lang, "settings_minutes")}
-                </p>
-              </div>
-            </div>
-            <Slider
-              value={[minutesFromSeconds(settings.shortBreak)]}
-              min={1}
-              max={30}
-              step={1}
-              onValueChange={(v) =>
-                patchSettings({ shortBreak: secondsFromMinutes(v[0] ?? 5) })
-              }
-            />
-          </div>
-
-          <div className="space-y-2">
-            <div className="flex items-center justify-between gap-4">
-              <div>
-                <Label>{t(lang, "settings_long_break")}</Label>
-                <p className="text-xs text-[var(--color-muted)]">
-                  {minutesFromSeconds(settings.longBreak)}{" "}
-                  {t(lang, "settings_minutes")}
-                </p>
-              </div>
-            </div>
-            <Slider
-              value={[minutesFromSeconds(settings.longBreak)]}
-              min={5}
-              max={45}
-              step={1}
-              onValueChange={(v) =>
-                patchSettings({ longBreak: secondsFromMinutes(v[0] ?? 15) })
-              }
-            />
-          </div>
-
-          <div className="space-y-2">
-            <div className="flex items-center justify-between gap-4">
-              <div>
-                <Label>{t(lang, "settings_long_break_after")}</Label>
-                <p className="text-xs text-[var(--color-muted)]">
-                  {settings.longBreakAfter} {t(lang, "settings_focus_sessions")}
-                </p>
-              </div>
-            </div>
-            <Slider
-              value={[settings.longBreakAfter]}
-              min={2}
-              max={8}
-              step={1}
-              onValueChange={(v) =>
-                patchSettings({ longBreakAfter: v[0] ?? settings.longBreakAfter })
-              }
-            />
-          </div>
-
           <div className="flex items-center justify-between gap-4 rounded-lg border border-[var(--color-card-border)] p-3">
             <div className="space-y-1">
               <Label>{t(lang, "settings_auto_advance")}</Label>
@@ -179,7 +88,7 @@ export function SettingsDialog() {
                   min={0}
                   max={100}
                   step={5}
-                  onValueChange={(v) =>
+                  onValueChange={(v: number[]) =>
                     patchSettings({ soundVolume: ((v[0] ?? 60) as number) / 100 })
                   }
                 />
@@ -189,7 +98,7 @@ export function SettingsDialog() {
 
           <div className="space-y-2">
             <Label>{t(lang, "settings_theme")}</Label>
-            <div className="grid grid-cols-3 gap-2">
+            <div className="grid grid-cols-2 gap-2 sm:grid-cols-3">
               {(
                 [
                   { id: "system", label: t(lang, "settings_theme_system") },
@@ -240,8 +149,10 @@ export function SettingsDialog() {
             <div className="grid grid-cols-3 gap-2">
               {(
                 [
-                  { id: "solid", label: t(lang, "settings_background_solid") },
                   { id: "pomoRed", label: t(lang, "settings_background_pomo") },
+                  { id: "pomoSlate", label: t(lang, "settings_background_slate") },
+                  { id: "pomoGold", label: t(lang, "settings_background_gold") },
+                  { id: "solid", label: t(lang, "settings_background_solid") },
                   { id: "customImage", label: t(lang, "settings_background_custom") },
                 ] as const satisfies ReadonlyArray<{ id: BackgroundPreset; label: string }>
               ).map((opt) => (
