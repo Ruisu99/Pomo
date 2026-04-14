@@ -14,19 +14,16 @@ export function AppShell({ children }: { children: React.ReactNode }) {
           <Image
             src="/logo_wordmark.png"
             alt="Pomo"
-            width={260}
-            height={80}
-            className="h-12 w-auto"
+            width={420}
+            height={140}
+            className="h-20 w-auto"
             priority
           />
-          <p className="mt-1 text-sm text-[var(--color-muted)]">
-            {t(lang, "header_title")}
-          </p>
         </div>
         <SiteNav />
       </header>
       <main className="flex-1">{children}</main>
-      <footer className="text-center text-xs text-[var(--color-muted)]">
+      <footer className="text-center text-xs" style={{ color: "var(--app-footer-color)" }}>
         {t(lang, "footer")}
       </footer>
     </div>

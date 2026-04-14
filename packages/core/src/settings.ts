@@ -10,8 +10,8 @@ export const DEFAULT_SETTINGS: Settings = {
   soundVolume: 0.6,
   theme: "system",
   language: "en",
-  backgroundPreset: "solid",
-  backgroundSolid: "#0b0f19",
+  backgroundPreset: "pomoRed",
+  backgroundSolid: "#a90000",
   backgroundImageDataUrl: null,
 };
 

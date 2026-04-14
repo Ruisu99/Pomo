@@ -50,6 +50,12 @@ export function TimerPanel() {
       ? null
       : tasks.find((t) => t.id === timer.activeTaskId) ?? null;
 
+  const totalInCycle = settings.longBreakAfter;
+  const currentWorkIndex =
+    timer.phase === "work" ? timer.workSessionsInCycle + 1 : timer.workSessionsInCycle;
+  const willLongBreakNext =
+    timer.phase === "work" && currentWorkIndex >= totalInCycle;
+
   return (
     <Card className="mx-auto w-full max-w-lg border-[var(--color-card-border)]">
       <CardHeader className="flex flex-row items-start justify-between gap-4 space-y-0">
@@ -60,6 +66,19 @@ export function TimerPanel() {
           <CardTitle className="mt-1 text-3xl tabular-nums tracking-tight">
             {formatClock(rem)}
           </CardTitle>
+          <div className="mt-2 flex flex-wrap items-center gap-2">
+            <span className="rounded-full border border-[color-mix(in_oklch,var(--color-card-border),transparent_30%)] bg-[color-mix(in_oklch,var(--color-card),transparent_40%)] px-2 py-1 text-xs font-medium text-[var(--color-foreground)]">
+              {t(lang, "timer_session_of", {
+                current: currentWorkIndex,
+                total: totalInCycle,
+              })}
+            </span>
+            {willLongBreakNext ? (
+              <span className="rounded-full border border-[color-mix(in_oklch,var(--color-card-border),transparent_30%)] bg-[color-mix(in_oklch,var(--color-accent),transparent_30%)] px-2 py-1 text-xs font-medium text-[var(--color-foreground)]">
+                {t(lang, "timer_long_break_next")}
+              </span>
+            ) : null}
+          </div>
           {activeTask ? (
             <p className="mt-2 text-sm text-[var(--color-muted)]">
               {t(lang, "timer_on")}:{" "}

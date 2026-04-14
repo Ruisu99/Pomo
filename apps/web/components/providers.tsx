@@ -50,10 +50,13 @@ export function AppProviders({ children }: { children: React.ReactNode }) {
     root.style.setProperty("--app-bg", bgSolid);
     if (bgPreset === "pomoRed") {
       root.style.setProperty("--app-bg-image", svgToDataUrl(POMO_RED_SVG));
+      root.style.setProperty("--app-footer-color", "rgba(255,255,255,0.78)");
     } else if (bgPreset === "customImage" && typeof bgImage === "string" && bgImage.length > 0) {
       root.style.setProperty("--app-bg-image", `url("${bgImage}")`);
+      root.style.setProperty("--app-footer-color", "rgba(255,255,255,0.8)");
     } else {
       root.style.setProperty("--app-bg-image", "none");
+      root.style.setProperty("--app-footer-color", "var(--color-muted)");
     }
   }, [bgPreset, bgSolid, bgImage]);
 

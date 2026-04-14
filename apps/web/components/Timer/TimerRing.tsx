@@ -68,7 +68,7 @@ export function TimerRing({ nowMs }: { nowMs: number }) {
           cx={R + STROKE}
           cy={R + STROKE}
           r={R}
-          stroke="color-mix(in_oklch,var(--color-card-border),transparent 35%)"
+          stroke="color-mix(in_oklch,var(--color-foreground),transparent 82%)"
           strokeWidth={STROKE}
           fill="none"
         />

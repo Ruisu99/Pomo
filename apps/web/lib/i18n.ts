@@ -5,6 +5,7 @@ type Dict = Record<string, string>;
 const en: Dict = {
   nav_timer: "Timer",
   nav_stats: "Stats",
+  nav_tutorial: "Tutorial",
 
   header_kicker: "Pomo",
   header_title: "Stay in flow",
@@ -17,6 +18,8 @@ const en: Dict = {
   timer_on: "On",
   timer_pick_task: "Pick a task below (optional).",
   timer_tap_to_dismiss: "Tap to dismiss",
+  timer_session_of: "Session {current}/{total}",
+  timer_long_break_next: "Long break next",
 
   action_pause: "Pause",
   action_resume: "Resume",
@@ -94,6 +97,7 @@ const en: Dict = {
 const de: Dict = {
   nav_timer: "Timer",
   nav_stats: "Statistik",
+  nav_tutorial: "Tutorial",
 
   header_kicker: "Pomo",
   header_title: "Im Flow bleiben",
@@ -106,6 +110,8 @@ const de: Dict = {
   timer_on: "Aufgabe",
   timer_pick_task: "Unten eine Aufgabe wählen (optional).",
   timer_tap_to_dismiss: "Tippen zum Ausblenden",
+  timer_session_of: "Session {current}/{total}",
+  timer_long_break_next: "Als Nächstes: lange Pause",
 
   action_pause: "Pause",
   action_resume: "Weiter",
