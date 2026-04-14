@@ -27,10 +27,8 @@ export function TimerRing({ nowMs }: { nowMs: number }) {
   const progress = total > 0 ? 1 - rem / total : 0;
   const offset = C * (1 - Math.max(0, Math.min(1, progress)));
 
-  const phaseColor =
-    timer.phase === "work"
-      ? "var(--color-primary)"
-      : "oklch(0.62 0.12 200)";
+  const gradId = timer.phase === "work" ? "gradWork" : "gradBreak";
+  const glowId = "ringGlow";
 
   return (
     <div className="relative mx-auto aspect-square w-[min(100%,280px)] max-w-[280px]">
@@ -39,11 +37,38 @@ export function TimerRing({ nowMs }: { nowMs: number }) {
         viewBox={`0 0 ${(R + STROKE) * 2} ${(R + STROKE) * 2}`}
         aria-hidden
       >
+        <defs>
+          <linearGradient id="gradWork" x1="0" y1="0" x2="1" y2="1">
+            <stop offset="0" stopColor="oklch(0.7 0.22 25)" />
+            <stop offset="1" stopColor="oklch(0.58 0.22 18)" />
+          </linearGradient>
+          <linearGradient id="gradBreak" x1="0" y1="0" x2="1" y2="1">
+            <stop offset="0" stopColor="oklch(0.74 0.16 150)" />
+            <stop offset="1" stopColor="oklch(0.62 0.14 200)" />
+          </linearGradient>
+          <filter id={glowId} x="-50%" y="-50%" width="200%" height="200%">
+            <feGaussianBlur stdDeviation="2.4" result="blur" />
+            <feColorMatrix
+              in="blur"
+              type="matrix"
+              values="
+                1 0 0 0 0
+                0 1 0 0 0
+                0 0 1 0 0
+                0 0 0 0.7 0"
+              result="glow"
+            />
+            <feMerge>
+              <feMergeNode in="glow" />
+              <feMergeNode in="SourceGraphic" />
+            </feMerge>
+          </filter>
+        </defs>
         <circle
           cx={R + STROKE}
           cy={R + STROKE}
           r={R}
-          stroke="var(--color-card-border)"
+          stroke="color-mix(in_oklch,var(--color-card-border),transparent 35%)"
           strokeWidth={STROKE}
           fill="none"
         />
@@ -51,11 +76,12 @@ export function TimerRing({ nowMs }: { nowMs: number }) {
           cx={R + STROKE}
           cy={R + STROKE}
           r={R}
-          stroke={phaseColor}
-          strokeWidth={STROKE}
+          stroke={`url(#${gradId})`}
+          strokeWidth={STROKE + 1}
           fill="none"
           strokeLinecap="round"
           strokeDasharray={C}
+          filter={`url(#${glowId})`}
           initial={false}
           animate={{ strokeDashoffset: offset }}
           transition={{ type: "tween", duration: 0.35, ease: "easeOut" }}

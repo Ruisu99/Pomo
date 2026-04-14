@@ -23,11 +23,11 @@ export function AppShell({ children }: { children: React.ReactNode }) {
           <div className="leading-tight">
             <div className="flex items-center gap-2">
               <Image
-                src="/logo_text.png"
+                src="/logo_wordmark.png"
                 alt="Pomo"
-                width={86}
-                height={24}
-                className="h-6 w-auto"
+                width={120}
+                height={32}
+                className="h-7 w-auto"
                 priority
               />
               <span className="rounded-full border border-[color-mix(in_oklch,var(--color-card-border),transparent_25%)] bg-[color-mix(in_oklch,var(--color-card),transparent_8%)] px-2 py-0.5 text-[10px] font-semibold uppercase tracking-wide text-[var(--color-muted)]">
