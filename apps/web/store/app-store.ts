@@ -79,7 +79,13 @@ function scheduleSave(get: () => AppState) {
   }, 250);
 }
 
-function milestoneForCount(n: number): string | null {
+function milestoneForCount(n: number, language: "en" | "de"): string | null {
+  if (language === "de") {
+    if (n === 4) return "Nice — 4 Fokus-Sessions heute.";
+    if (n === 8) return "8 Sessions heute. Stark.";
+    if (n > 0 && n % 10 === 0) return `${n} Sessions heute. Bleib dran.`;
+    return null;
+  }
   if (n === 4) return "Nice — 4 focus sessions today.";
   if (n === 8) return "8 sessions today. You’re on fire.";
   if (n > 0 && n % 10 === 0) return `${n} sessions today. Keep the rhythm.`;
@@ -125,8 +131,16 @@ export const useAppStore = create<AppState>((set, get) => ({
 
   hydrate: () => {
     if (typeof window === "undefined") return;
+    const raw = storage.load();
     const data = loadInitial();
     set({ ...data, milestoneMessage: null });
+    if (!raw?.settings || (raw.settings as Partial<Settings>).language == null) {
+      const browserLang = navigator.language?.toLowerCase().startsWith("de")
+        ? "de"
+        : "en";
+      set((s) => ({ settings: clampSettings({ ...s.settings, language: browserLang }) }));
+      scheduleSave(get);
+    }
   },
 
   patchSettings: (partial) => {
@@ -302,12 +316,12 @@ export const useAppStore = create<AppState>((set, get) => ({
     if (settings.soundEnabled) {
       void playPhaseCompleteChime(settings.soundVolume);
     }
-    notifyPhaseComplete(prevPhase, nextPhaseKind);
+    notifyPhaseComplete(settings.language, prevPhase, nextPhaseKind);
 
     let milestoneMessage: string | null = null;
     if (phase === "work") {
       const today = completedWorkToday(nextSessions, new Date(nowMs));
-      milestoneMessage = milestoneForCount(today);
+      milestoneMessage = milestoneForCount(today, settings.language);
     }
 
     if (settings.autoAdvance) {

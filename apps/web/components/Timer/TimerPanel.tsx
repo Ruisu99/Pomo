@@ -6,6 +6,7 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { SettingsDialog } from "@/components/Settings/SettingsDialog";
 import { useTickMs } from "@/hooks/use-tick";
+import { t } from "@/lib/i18n";
 import { useAppStore } from "@/store/app-store";
 import { TimerRing } from "./TimerRing";
 
@@ -16,14 +17,17 @@ function formatClock(ms: number): string {
   return `${String(m).padStart(2, "0")}:${String(r).padStart(2, "0")}`;
 }
 
-function phaseTitle(phase: "work" | "shortBreak" | "longBreak"): string {
+function phaseTitle(
+  lang: "en" | "de",
+  phase: "work" | "shortBreak" | "longBreak",
+): string {
   switch (phase) {
     case "work":
-      return "Focus";
+      return t(lang, "phase_focus");
     case "shortBreak":
-      return "Short break";
+      return t(lang, "phase_short_break");
     case "longBreak":
-      return "Long break";
+      return t(lang, "phase_long_break");
   }
 }
 
@@ -38,6 +42,7 @@ export function TimerPanel() {
   const pause = useAppStore((s) => s.pause);
   const resetPhaseProgress = useAppStore((s) => s.resetPhaseProgress);
   const skipPhase = useAppStore((s) => s.skipPhase);
+  const lang = settings.language;
 
   const rem = remainingMs(timer, settings, nowMs);
   const activeTask =
@@ -50,21 +55,21 @@ export function TimerPanel() {
       <CardHeader className="flex flex-row items-start justify-between gap-4 space-y-0">
         <div>
           <p className="text-sm font-medium text-[var(--color-muted)]">
-            {phaseTitle(timer.phase)}
+            {phaseTitle(lang, timer.phase)}
           </p>
           <CardTitle className="mt-1 text-3xl tabular-nums tracking-tight">
             {formatClock(rem)}
           </CardTitle>
           {activeTask ? (
             <p className="mt-2 text-sm text-[var(--color-muted)]">
-              On:{" "}
+              {t(lang, "timer_on")}:{" "}
               <span className="font-medium text-[var(--color-foreground)]">
                 {activeTask.label}
               </span>
             </p>
           ) : (
             <p className="mt-2 text-sm text-[var(--color-muted)]">
-              Pick a task below (optional).
+              {t(lang, "timer_pick_task")}
             </p>
           )}
         </div>
@@ -81,7 +86,7 @@ export function TimerPanel() {
           >
             {milestoneMessage}
             <span className="mt-1 block text-xs text-[var(--color-muted)]">
-              Tap to dismiss
+              {t(lang, "timer_tap_to_dismiss")}
             </span>
           </button>
         ) : null}
@@ -90,12 +95,14 @@ export function TimerPanel() {
           {timer.runState === "running" ? (
             <Button type="button" variant="secondary" size="lg" onClick={() => pause()}>
               <Pause />
-              Pause
+              {t(lang, "action_pause")}
             </Button>
           ) : (
             <Button type="button" size="lg" onClick={() => start()}>
               <Play />
-              {timer.runState === "paused" ? "Resume" : "Start"}
+              {timer.runState === "paused"
+                ? t(lang, "action_resume")
+                : t(lang, "action_start")}
             </Button>
           )}
           <Button
@@ -105,11 +112,11 @@ export function TimerPanel() {
             onClick={() => resetPhaseProgress()}
           >
             <RotateCcw />
-            Reset
+            {t(lang, "action_reset")}
           </Button>
           <Button type="button" variant="secondary" size="lg" onClick={() => skipPhase()}>
             <SkipForward />
-            Skip
+            {t(lang, "action_skip")}
           </Button>
         </div>
       </CardContent>

@@ -19,6 +19,8 @@ export type Task = {
 
 export type ThemeMode = "light" | "dark" | "system";
 
+export type Language = "en" | "de";
+
 export type Settings = {
   workDuration: number;
   shortBreak: number;
@@ -28,6 +30,7 @@ export type Settings = {
   soundEnabled: boolean;
   soundVolume: number;
   theme: ThemeMode;
+  language: Language;
 };
 
 export type PhaseKind = "work" | "shortBreak" | "longBreak";

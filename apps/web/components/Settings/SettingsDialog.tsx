@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import type { ThemeMode } from "@pomodoro/core";
+import type { Language, ThemeMode } from "@pomodoro/core";
 import { Bell, Settings } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import {
@@ -16,6 +16,7 @@ import { Label } from "@/components/ui/label";
 import { Slider } from "@/components/ui/slider";
 import { Switch } from "@/components/ui/switch";
 import { ensureNotificationPermission } from "@/lib/notify";
+import { t } from "@/lib/i18n";
 import { cn } from "@/lib/utils";
 import { useAppStore } from "@/store/app-store";
 
@@ -32,19 +33,24 @@ export function SettingsDialog() {
   const settings = useAppStore((s) => s.settings);
   const patchSettings = useAppStore((s) => s.patchSettings);
   const [notifBusy, setNotifBusy] = useState(false);
+  const lang = settings.language;
 
   return (
     <Dialog open={open} onOpenChange={setOpen}>
       <DialogTrigger asChild>
-        <Button variant="secondary" size="icon" aria-label="Settings">
+        <Button
+          variant="secondary"
+          size="icon"
+          aria-label={t(lang, "settings_aria")}
+        >
           <Settings className="size-4" />
         </Button>
       </DialogTrigger>
       <DialogContent className="max-h-[85vh] overflow-y-auto">
         <DialogHeader>
-          <DialogTitle>Settings</DialogTitle>
+          <DialogTitle>{t(lang, "settings_title")}</DialogTitle>
           <DialogDescription>
-            Tune durations, sounds, and pacing. Everything stays on this device.
+            {t(lang, "settings_desc")}
           </DialogDescription>
         </DialogHeader>
 
@@ -52,9 +58,10 @@ export function SettingsDialog() {
           <div className="space-y-2">
             <div className="flex items-center justify-between gap-4">
               <div>
-                <Label>Focus length</Label>
+                <Label>{t(lang, "settings_focus_length")}</Label>
                 <p className="text-xs text-[var(--color-muted)]">
-                  {minutesFromSeconds(settings.workDuration)} minutes
+                  {minutesFromSeconds(settings.workDuration)}{" "}
+                  {t(lang, "settings_minutes")}
                 </p>
               </div>
             </div>
@@ -72,9 +79,10 @@ export function SettingsDialog() {
           <div className="space-y-2">
             <div className="flex items-center justify-between gap-4">
               <div>
-                <Label>Short break</Label>
+                <Label>{t(lang, "settings_short_break")}</Label>
                 <p className="text-xs text-[var(--color-muted)]">
-                  {minutesFromSeconds(settings.shortBreak)} minutes
+                  {minutesFromSeconds(settings.shortBreak)}{" "}
+                  {t(lang, "settings_minutes")}
                 </p>
               </div>
             </div>
@@ -92,9 +100,10 @@ export function SettingsDialog() {
           <div className="space-y-2">
             <div className="flex items-center justify-between gap-4">
               <div>
-                <Label>Long break</Label>
+                <Label>{t(lang, "settings_long_break")}</Label>
                 <p className="text-xs text-[var(--color-muted)]">
-                  {minutesFromSeconds(settings.longBreak)} minutes
+                  {minutesFromSeconds(settings.longBreak)}{" "}
+                  {t(lang, "settings_minutes")}
                 </p>
               </div>
             </div>
@@ -112,9 +121,9 @@ export function SettingsDialog() {
           <div className="space-y-2">
             <div className="flex items-center justify-between gap-4">
               <div>
-                <Label>Long break after</Label>
+                <Label>{t(lang, "settings_long_break_after")}</Label>
                 <p className="text-xs text-[var(--color-muted)]">
-                  {settings.longBreakAfter} focus sessions
+                  {settings.longBreakAfter} {t(lang, "settings_focus_sessions")}
                 </p>
               </div>
             </div>
@@ -131,9 +140,9 @@ export function SettingsDialog() {
 
           <div className="flex items-center justify-between gap-4 rounded-lg border border-[var(--color-card-border)] p-3">
             <div className="space-y-1">
-              <Label>Auto-advance</Label>
+              <Label>{t(lang, "settings_auto_advance")}</Label>
               <p className="text-xs text-[var(--color-muted)]">
-                Automatically start the next phase when one ends.
+                {t(lang, "settings_auto_advance_desc")}
               </p>
             </div>
             <Switch
@@ -145,9 +154,9 @@ export function SettingsDialog() {
           <div className="space-y-3 rounded-lg border border-[var(--color-card-border)] p-3">
             <div className="flex items-center justify-between gap-4">
               <div className="space-y-1">
-                <Label>Sound</Label>
+                <Label>{t(lang, "settings_sound")}</Label>
                 <p className="text-xs text-[var(--color-muted)]">
-                  Gentle chime when a phase ends.
+                  {t(lang, "settings_sound_desc")}
                 </p>
               </div>
               <Switch
@@ -158,7 +167,9 @@ export function SettingsDialog() {
             {settings.soundEnabled ? (
               <div className="space-y-2">
                 <div className="flex items-center justify-between">
-                  <span className="text-xs text-[var(--color-muted)]">Volume</span>
+                  <span className="text-xs text-[var(--color-muted)]">
+                    {t(lang, "settings_volume")}
+                  </span>
                   <span className="text-xs text-[var(--color-muted)]">
                     {Math.round(settings.soundVolume * 100)}%
                   </span>
@@ -177,13 +188,13 @@ export function SettingsDialog() {
           </div>
 
           <div className="space-y-2">
-            <Label>Theme</Label>
+            <Label>{t(lang, "settings_theme")}</Label>
             <div className="grid grid-cols-3 gap-2">
               {(
                 [
-                  { id: "system", label: "System" },
-                  { id: "light", label: "Light" },
-                  { id: "dark", label: "Dark" },
+                  { id: "system", label: t(lang, "settings_theme_system") },
+                  { id: "light", label: t(lang, "settings_theme_light") },
+                  { id: "dark", label: t(lang, "settings_theme_dark") },
                 ] as const satisfies ReadonlyArray<{ id: ThemeMode; label: string }>
               ).map((t) => (
                 <Button
@@ -199,15 +210,40 @@ export function SettingsDialog() {
             </div>
           </div>
 
+          <div className="space-y-2">
+            <Label>{t(lang, "settings_language")}</Label>
+            <div className="grid grid-cols-2 gap-2">
+              {(
+                [
+                  { id: "en", label: t(lang, "settings_language_en") },
+                  { id: "de", label: t(lang, "settings_language_de") },
+                ] as const satisfies ReadonlyArray<{ id: Language; label: string }>
+              ).map((opt) => (
+                <Button
+                  key={opt.id}
+                  type="button"
+                  variant={settings.language === opt.id ? "default" : "secondary"}
+                  className={cn(
+                    "w-full",
+                    settings.language !== opt.id && "bg-transparent",
+                  )}
+                  onClick={() => patchSettings({ language: opt.id })}
+                >
+                  {opt.label}
+                </Button>
+              ))}
+            </div>
+          </div>
+
           <div className="space-y-2 rounded-lg border border-[var(--color-card-border)] p-3">
             <div className="flex items-start justify-between gap-3">
               <div className="space-y-1">
                 <Label className="inline-flex items-center gap-2">
                   <Bell className="size-4" />
-                  Notifications
+                  {t(lang, "settings_notifications")}
                 </Label>
                 <p className="text-xs text-[var(--color-muted)]">
-                  Browser notifications when a phase ends (useful in the background).
+                  {t(lang, "settings_notifications_desc")}
                 </p>
               </div>
             </div>
@@ -225,7 +261,7 @@ export function SettingsDialog() {
                 }
               }}
             >
-              Enable notifications
+              {t(lang, "settings_enable_notifications")}
             </Button>
           </div>
         </div>

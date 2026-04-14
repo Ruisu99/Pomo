@@ -6,6 +6,7 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Label } from "@/components/ui/label";
 import { Slider } from "@/components/ui/slider";
+import { t } from "@/lib/i18n";
 import { cn } from "@/lib/utils";
 import { useAppStore } from "@/store/app-store";
 
@@ -15,6 +16,7 @@ export function TaskList() {
 
   const tasks = useAppStore((s) => s.tasks);
   const activeId = useAppStore((s) => s.timer.activeTaskId);
+  const lang = useAppStore((s) => s.settings.language);
   const addTask = useAppStore((s) => s.addTask);
   const setActiveTask = useAppStore((s) => s.setActiveTask);
   const toggleTaskDone = useAppStore((s) => s.toggleTaskDone);
@@ -31,7 +33,7 @@ export function TaskList() {
   return (
     <Card className="mx-auto w-full max-w-lg border-[var(--color-card-border)]">
       <CardHeader>
-        <CardTitle className="text-lg">Today</CardTitle>
+        <CardTitle className="text-lg">{t(lang, "tasks_title")}</CardTitle>
       </CardHeader>
       <CardContent className="space-y-4">
         <form
@@ -44,18 +46,18 @@ export function TaskList() {
           }}
         >
           <div className="space-y-2">
-            <Label htmlFor="task">Task</Label>
+            <Label htmlFor="task">{t(lang, "tasks_task")}</Label>
             <input
               id="task"
               value={label}
               onChange={(e) => setLabel(e.target.value)}
-              placeholder="What are you working on?"
+              placeholder={t(lang, "tasks_placeholder")}
               className="h-10 w-full rounded-md border border-[var(--color-card-border)] bg-[var(--color-card)] px-3 text-sm outline-none ring-offset-[var(--color-background)] focus-visible:ring-2 focus-visible:ring-[var(--color-ring)]"
             />
           </div>
           <div className="space-y-2">
             <div className="flex items-center justify-between">
-              <Label>Estimated pomodoros</Label>
+              <Label>{t(lang, "tasks_estimated")}</Label>
               <span className="text-sm text-[var(--color-muted)]">{estimate}</span>
             </div>
             <Slider
@@ -67,49 +69,57 @@ export function TaskList() {
             />
           </div>
           <Button type="submit" className="w-full" disabled={!label.trim()}>
-            Add task
+            {t(lang, "tasks_add")}
           </Button>
         </form>
 
         <div className="space-y-2">
           {sorted.length === 0 ? (
             <p className="text-sm text-[var(--color-muted)]">
-              No tasks yet. Add one to estimate your day.
+              {t(lang, "tasks_empty")}
             </p>
           ) : (
-            sorted.map((t) => {
-              const active = activeId === t.id;
+            sorted.map((task) => {
+              const active = activeId === task.id;
               return (
                 <div
-                  key={t.id}
+                  key={task.id}
                   className={cn(
                     "flex flex-col gap-2 rounded-lg border border-[var(--color-card-border)] p-3 sm:flex-row sm:items-center sm:justify-between",
                     active && "border-[var(--color-primary)] bg-[var(--color-accent)]",
-                    t.done && "opacity-60",
+                    task.done && "opacity-60",
                   )}
                 >
                   <button
                     type="button"
                     className="text-left text-sm font-medium"
-                    onClick={() => setActiveTask(t.id)}
+                    onClick={() => setActiveTask(task.id)}
                   >
-                    <span className={cn(t.done && "line-through")}>{t.label}</span>
+                    <span className={cn(task.done && "line-through")}>
+                      {task.label}
+                    </span>
                     <span className="mt-1 block text-xs font-normal text-[var(--color-muted)]">
-                      {t.completedPomos}/{t.estimatedPomos} sessions
+                      {task.completedPomos}/{task.estimatedPomos}{" "}
+                      {t(lang, "tasks_sessions")}
                     </span>
                   </button>
 
                   <div className="flex flex-wrap items-center gap-2">
                     <div className="flex items-center gap-2">
-                      <span className="text-xs text-[var(--color-muted)]">Est.</span>
+                      <span className="text-xs text-[var(--color-muted)]">
+                        {t(lang, "tasks_est_short")}
+                      </span>
                       <Slider
                         className="w-28"
-                        value={[t.estimatedPomos]}
+                        value={[task.estimatedPomos]}
                         min={1}
                         max={12}
                         step={1}
                         onValueChange={(v) =>
-                          updateTaskEstimate(t.id, v[0] ?? t.estimatedPomos)
+                          updateTaskEstimate(
+                            task.id,
+                            v[0] ?? task.estimatedPomos,
+                          )
                         }
                       />
                     </div>
@@ -117,17 +127,26 @@ export function TaskList() {
                       type="button"
                       size="icon"
                       variant="secondary"
-                      aria-label={t.done ? "Mark not done" : "Mark done"}
-                      onClick={() => toggleTaskDone(t.id)}
+                      aria-label={
+                        task.done
+                          ? t(lang, "tasks_mark_not_done")
+                          : t(lang, "tasks_mark_done")
+                      }
+                      onClick={() => toggleTaskDone(task.id)}
                     >
-                      <Check className={cn("size-4", t.done && "text-[var(--color-primary)]")} />
+                      <Check
+                        className={cn(
+                          "size-4",
+                          task.done && "text-[var(--color-primary)]",
+                        )}
+                      />
                     </Button>
                     <Button
                       type="button"
                       size="icon"
                       variant="ghost"
-                      aria-label="Remove task"
-                      onClick={() => removeTask(t.id)}
+                      aria-label={t(lang, "tasks_remove")}
+                      onClick={() => removeTask(task.id)}
                     >
                       <Trash2 className="size-4" />
                     </Button>

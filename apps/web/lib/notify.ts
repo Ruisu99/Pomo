@@ -8,6 +8,7 @@ export async function ensureNotificationPermission(): Promise<NotificationPermis
 }
 
 export function notifyPhaseComplete(
+  language: "en" | "de",
   phase: "work" | "shortBreak" | "longBreak",
   nextPhase: "work" | "shortBreak" | "longBreak",
 ): void {
@@ -16,13 +17,24 @@ export function notifyPhaseComplete(
 
   const title = "Pomodoro";
   let body = "";
-  if (phase === "work") {
-    body =
-      nextPhase === "longBreak"
-        ? "Great focus block. Time for a long break."
-        : "Work session done. Take a short break.";
+  if (language === "de") {
+    if (phase === "work") {
+      body =
+        nextPhase === "longBreak"
+          ? "Starker Fokus-Block. Zeit für eine lange Pause."
+          : "Fokus fertig. Zeit für eine kurze Pause.";
+    } else {
+      body = "Pause vorbei. Bereit für die nächste Fokus-Session?";
+    }
   } else {
-    body = "Break over. Ready for the next focus session.";
+    if (phase === "work") {
+      body =
+        nextPhase === "longBreak"
+          ? "Great focus block. Time for a long break."
+          : "Work session done. Take a short break.";
+    } else {
+      body = "Break over. Ready for the next focus session.";
+    }
   }
 
   try {

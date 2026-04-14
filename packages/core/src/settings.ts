@@ -9,6 +9,7 @@ export const DEFAULT_SETTINGS: Settings = {
   soundEnabled: true,
   soundVolume: 0.6,
   theme: "system",
+  language: "en",
 };
 
 export function clampSettings(partial: Partial<Settings>): Settings {
@@ -20,5 +21,6 @@ export function clampSettings(partial: Partial<Settings>): Settings {
     longBreak: Math.max(60, Math.min(60 * 60, s.longBreak)),
     longBreakAfter: Math.max(1, Math.min(12, Math.floor(s.longBreakAfter))),
     soundVolume: Math.max(0, Math.min(1, s.soundVolume)),
+    language: s.language === "de" ? "de" : "en",
   };
 }
