@@ -15,7 +15,7 @@ export function SiteNav() {
     { href: "/stats", label: t(lang, "nav_stats"), icon: BarChart3 },
   ];
   return (
-    <nav className="flex items-center gap-1 rounded-lg border border-[var(--color-card-border)] bg-[var(--color-card)] p-1 shadow-sm">
+    <nav className="glass flex items-center gap-1 rounded-2xl border border-[color-mix(in_oklch,var(--color-card-border),transparent_30%)] bg-[color-mix(in_oklch,var(--color-card),transparent_55%)] p-1 shadow-[0_16px_40px_-30px_rgba(0,0,0,0.8)]">
       {links.map(({ href, label, icon: Icon }) => {
         const active = pathname === href;
         return (
@@ -25,8 +25,8 @@ export function SiteNav() {
             className={cn(
               "inline-flex items-center gap-2 rounded-md px-3 py-2 text-sm font-medium transition-colors",
               active
-                ? "bg-[var(--color-primary)] text-[var(--color-primary-foreground)]"
-                : "text-[var(--color-muted)] hover:bg-[var(--color-accent)] hover:text-[var(--color-foreground)]",
+                ? "bg-[color-mix(in_oklch,var(--color-primary),white_12%)] text-[var(--color-primary-foreground)] shadow-[0_14px_34px_-24px_rgba(0,0,0,0.8)]"
+                : "text-[var(--color-muted)] hover:bg-[color-mix(in_oklch,var(--color-card),transparent_35%)] hover:text-[var(--color-foreground)]",
             )}
           >
             <Icon className="size-4" />

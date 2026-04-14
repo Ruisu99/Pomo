@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import type { Language, ThemeMode } from "@pomodoro/core";
+import type { BackgroundPreset, Language, ThemeMode } from "@pomodoro/core";
 import { Bell, Settings } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import {
@@ -233,6 +233,77 @@ export function SettingsDialog() {
                 </Button>
               ))}
             </div>
+          </div>
+
+          <div className="space-y-2">
+            <Label>{t(lang, "settings_background")}</Label>
+            <div className="grid grid-cols-3 gap-2">
+              {(
+                [
+                  { id: "solid", label: t(lang, "settings_background_solid") },
+                  { id: "pomoRed", label: t(lang, "settings_background_pomo") },
+                  { id: "customImage", label: t(lang, "settings_background_custom") },
+                ] as const satisfies ReadonlyArray<{ id: BackgroundPreset; label: string }>
+              ).map((opt) => (
+                <Button
+                  key={opt.id}
+                  type="button"
+                  variant={settings.backgroundPreset === opt.id ? "default" : "secondary"}
+                  className={cn(
+                    "w-full",
+                    settings.backgroundPreset !== opt.id && "bg-transparent",
+                  )}
+                  onClick={() => patchSettings({ backgroundPreset: opt.id })}
+                >
+                  {opt.label}
+                </Button>
+              ))}
+            </div>
+
+            <div className="flex items-center justify-between gap-3 rounded-lg border border-[var(--color-card-border)] p-3">
+              <div className="space-y-1">
+                <Label>{t(lang, "settings_background_color")}</Label>
+                <p className="text-xs text-[var(--color-muted)]">{settings.backgroundSolid}</p>
+              </div>
+              <input
+                aria-label={t(lang, "settings_background_color")}
+                type="color"
+                value={settings.backgroundSolid}
+                onChange={(e) => patchSettings({ backgroundSolid: e.target.value })}
+                className="h-10 w-12 cursor-pointer rounded-md border border-[var(--color-card-border)] bg-transparent p-1"
+              />
+            </div>
+
+            {settings.backgroundPreset === "customImage" ? (
+              <div className="space-y-2 rounded-lg border border-[var(--color-card-border)] p-3">
+                <Label>{t(lang, "settings_background_upload")}</Label>
+                <input
+                  type="file"
+                  accept="image/*"
+                  onChange={async (e) => {
+                    const file = e.target.files?.[0];
+                    if (!file) return;
+                    const reader = new FileReader();
+                    reader.onload = () => {
+                      const result = typeof reader.result === "string" ? reader.result : null;
+                      patchSettings({ backgroundImageDataUrl: result });
+                    };
+                    reader.readAsDataURL(file);
+                  }}
+                  className="block w-full text-sm text-[var(--color-muted)] file:mr-3 file:rounded-lg file:border file:border-[var(--color-card-border)] file:bg-[var(--color-card)] file:px-3 file:py-2 file:text-sm file:font-medium file:text-[var(--color-foreground)] hover:file:bg-[var(--color-accent)]"
+                />
+                {settings.backgroundImageDataUrl ? (
+                  <Button
+                    type="button"
+                    variant="secondary"
+                    className="w-full"
+                    onClick={() => patchSettings({ backgroundImageDataUrl: null })}
+                  >
+                    {t(lang, "settings_background_remove")}
+                  </Button>
+                ) : null}
+              </div>
+            ) : null}
           </div>
 
           <div className="space-y-2 rounded-lg border border-[var(--color-card-border)] p-3">

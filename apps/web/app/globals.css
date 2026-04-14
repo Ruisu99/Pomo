@@ -49,10 +49,11 @@ body {
 }
 
 body {
-  background:
-    radial-gradient(900px 520px at 18% -12%, oklch(0.97 0.08 30 / 0.42), transparent 62%),
-    radial-gradient(720px 460px at 92% 10%, oklch(0.96 0.05 35 / 0.22), transparent 60%),
-    var(--color-background);
+  background: var(--app-bg, var(--color-background));
+  background-image: var(--app-bg-image, none);
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: center;
   color: var(--color-foreground);
   font-family: var(--font-sans);
   -webkit-font-smoothing: antialiased;

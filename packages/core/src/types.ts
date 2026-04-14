@@ -21,6 +21,8 @@ export type ThemeMode = "light" | "dark" | "system";
 
 export type Language = "en" | "de";
 
+export type BackgroundPreset = "solid" | "pomoRed" | "customImage";
+
 export type Settings = {
   workDuration: number;
   shortBreak: number;
@@ -31,6 +33,9 @@ export type Settings = {
   soundVolume: number;
   theme: ThemeMode;
   language: Language;
+  backgroundPreset: BackgroundPreset;
+  backgroundSolid: string;
+  backgroundImageDataUrl: string | null;
 };
 
 export type PhaseKind = "work" | "shortBreak" | "longBreak";
