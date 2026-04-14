@@ -15,7 +15,7 @@ export function notifyPhaseComplete(
   if (typeof window === "undefined" || !("Notification" in window)) return;
   if (Notification.permission !== "granted") return;
 
-  const title = "Pomodoro";
+  const title = "Pomo";
   let body = "";
   if (language === "de") {
     if (phase === "work") {

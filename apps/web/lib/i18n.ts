@@ -6,7 +6,7 @@ const en: Dict = {
   nav_timer: "Timer",
   nav_stats: "Stats",
 
-  header_kicker: "Pomodoro",
+  header_kicker: "Pomo",
   header_title: "Stay in flow",
   footer: "Local-first. No account. Your data stays in this browser.",
 
@@ -74,7 +74,7 @@ const en: Dict = {
   offline_desc:
     "This page isn’t cached yet, but your installed app can still run the timer when it’s available offline.",
 
-  notif_title: "Pomodoro",
+  notif_title: "Pomo",
   notif_work_long: "Great focus block. Time for a long break.",
   notif_work_short: "Work session done. Take a short break.",
   notif_break_over: "Break over. Ready for the next focus session.",
@@ -88,7 +88,7 @@ const de: Dict = {
   nav_timer: "Timer",
   nav_stats: "Statistik",
 
-  header_kicker: "Pomodoro",
+  header_kicker: "Pomo",
   header_title: "Im Flow bleiben",
   footer: "Lokal-first. Kein Account. Deine Daten bleiben in diesem Browser.",
 
@@ -157,7 +157,7 @@ const de: Dict = {
   offline_desc:
     "Diese Seite ist noch nicht im Cache, aber die installierte App kann den Timer trotzdem offline nutzen (sobald alles gecacht ist).",
 
-  notif_title: "Pomodoro",
+  notif_title: "Pomo",
   notif_work_long: "Starker Fokus-Block. Zeit für eine lange Pause.",
   notif_work_short: "Fokus fertig. Zeit für eine kurze Pause.",
   notif_break_over: "Pause vorbei. Bereit für die nächste Fokus-Session?",
