@@ -54,14 +54,6 @@ export type Settings = {
   longBreak: number;
   longBreakAfter: number;
   autoAdvance: boolean;
-  /** Master switch: auto-starts timer, auto-advances phases, enables focus rules */
-  focusModeEnabled: boolean;
-  /** Block distracting websites during work (requires browser extension) */
-  blockDistractions: boolean;
-  /** Domains to block during work, e.g. youtube.com */
-  blockedSites: string[];
-  /** Disallow pause/skip/reset during work when focus mode is on */
-  strictFocus: boolean;
   soundEnabled: boolean;
   soundVolume: number;
   theme: ThemeMode;
@@ -69,7 +61,6 @@ export type Settings = {
   backgroundPreset: BackgroundPreset;
   backgroundSolid: string;
   backgroundImageDataUrl: string | null;
-  /** Ambient / lo-fi background audio */
   ambientEnabled: boolean;
   ambientTrackId: AmbientTrackId;
   ambientVolume: number;

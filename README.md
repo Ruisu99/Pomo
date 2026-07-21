@@ -1,6 +1,6 @@
 # Pomodoro
 
-Local-first Pomodoro web app (monorepo): focused timer, tasks with projects & templates, ambient/lo-fi sound, streaks, and reports with CSV export.
+Local-first Pomodoro web app (monorepo): focused timer, tasks with projects & templates, focus radio, streaks, and reports with CSV export.
 
 ## Structure
 
@@ -9,15 +9,16 @@ Local-first Pomodoro web app (monorepo): focused timer, tasks with projects & te
 
 ## Features
 
-- Pomodoro timer with focus mode + site blocking (browser extension)
-- Ambient / lo-fi loops (local WAV files under `apps/web/public/audio/`)
+- Pomodoro timer with custom durations
+- Focus radio (Lofi Girl + Jazz YouTube streams)
 - Projects, task templates, finish-time estimate
 - Stats: focus minutes, project breakdown, CSV export
-- Keyboard: `Space` start/pause · `N` skip · `M` ambient mute/play
+- English / German UI
+- Keyboard: `Space` start/pause · `N` skip · `M` mute radio
 
 ## Audio
 
-Focus music uses the [Lofi Girl](https://www.youtube.com/watch?v=X4VbdwhkE10) YouTube live stream (embedded). Local WAV loops under `apps/web/public/audio/` remain as optional assets.
+Focus music uses YouTube live streams ([Lofi Girl](https://www.youtube.com/watch?v=X4VbdwhkE10), [Jazz](https://www.youtube.com/watch?v=E2vONfzoyRI)).
 
 ## Requirements
 

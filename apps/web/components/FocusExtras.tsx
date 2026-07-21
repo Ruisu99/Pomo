@@ -3,6 +3,7 @@
 import { useEffect } from "react";
 import { remainingMs } from "@pomodoro/core";
 import { pauseLofi, playLofi } from "@/lib/lofi-player";
+import { t } from "@/lib/i18n";
 import { useTickMs } from "@/hooks/use-tick";
 import { useAppStore } from "@/store/app-store";
 
@@ -78,12 +79,13 @@ export function DocumentTitleSync() {
   useEffect(() => {
     const rem = remainingMs(timer, settings, nowMs);
     const clock = formatClock(rem);
-    const phase =
+    const phase = t(settings.language, 
       timer.phase === "work"
-        ? "Focus"
+        ? "phase_focus"
         : timer.phase === "shortBreak"
-          ? "Break"
-          : "Long break";
+          ? "phase_short_break"
+          : "phase_long_break",
+    );
     const running = timer.runState === "running";
     document.title = running ? `${clock} · ${phase} · Pomo` : `Pomo · ${phase}`;
   }, [timer, settings, nowMs]);

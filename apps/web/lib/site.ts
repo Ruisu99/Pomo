@@ -6,10 +6,10 @@ export const SITE_URL =
 export const SITE_NAME = "Pomo";
 
 export const SITE_DESCRIPTION_EN =
-  "Free online Pomodoro timer with tasks, focus mode, Lofi Girl music, and local-first stats. No account required.";
+  "Free online Pomodoro timer with tasks, Lofi Girl & Jazz radio, and local-first stats. No account required.";
 
 export const SITE_DESCRIPTION_DE =
-  "Kostenloser Online-Pomodoro-Timer mit Aufgaben, Fokusmodus, Lofi-Girl-Musik und lokaler Statistik. Ohne Account.";
+  "Kostenloser Online-Pomodoro-Timer mit Aufgaben, Lofi-Girl- & Jazz-Radio und lokaler Statistik. Ohne Account.";
 
 export const SITE_KEYWORDS = [
   "pomodoro timer",

@@ -4,11 +4,11 @@ import { HomeApp } from "@/components/HomeApp";
 export const metadata: Metadata = {
   title: "Free Online Pomodoro Timer",
   description:
-    "Start focusing now with Pomo — a free online Pomodoro timer with tasks, focus mode, and Lofi Girl. No signup.",
+    "Start focusing now with Pomo — a free online Pomodoro timer with tasks and Lofi Girl. No signup.",
   openGraph: {
     title: "Pomo — Free Online Pomodoro Timer",
     description:
-      "Start focusing now with Pomo — a free online Pomodoro timer with tasks, focus mode, and Lofi Girl. No signup.",
+      "Start focusing now with Pomo — a free online Pomodoro timer with tasks and Lofi Girl. No signup.",
   },
 };
 

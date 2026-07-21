@@ -1,4 +1,3 @@
-import { DEFAULT_BLOCKED_SITES, normalizeBlockedSites } from "./focus";
 import type { AmbientTrackId, Settings } from "./types";
 
 export const DEFAULT_SETTINGS: Settings = {
@@ -7,10 +6,6 @@ export const DEFAULT_SETTINGS: Settings = {
   longBreak: 15 * 60,
   longBreakAfter: 4,
   autoAdvance: false,
-  focusModeEnabled: false,
-  blockDistractions: true,
-  blockedSites: [...DEFAULT_BLOCKED_SITES],
-  strictFocus: true,
   soundEnabled: true,
   soundVolume: 0.6,
   theme: "system",
@@ -29,7 +24,7 @@ function normalizeAmbientTrackId(id: unknown): AmbientTrackId {
   return "lofi";
 }
 
-export function clampSettings(partial: Partial<Settings>): Settings {
+export function clampSettings(partial: Partial<Settings> & Record<string, unknown>): Settings {
   const s = { ...DEFAULT_SETTINGS, ...partial };
   const preset =
     s.backgroundPreset === "pomoRed" ||
@@ -39,17 +34,19 @@ export function clampSettings(partial: Partial<Settings>): Settings {
     s.backgroundPreset === "solid"
       ? s.backgroundPreset
       : "solid";
+
   return {
-    ...s,
     workDuration: Math.max(60, Math.min(120 * 60, s.workDuration)),
     shortBreak: Math.max(60, Math.min(60 * 60, s.shortBreak)),
     longBreak: Math.max(60, Math.min(60 * 60, s.longBreak)),
     longBreakAfter: Math.max(1, Math.min(12, Math.floor(s.longBreakAfter))),
+    autoAdvance: Boolean(s.autoAdvance),
+    soundEnabled: s.soundEnabled !== false,
     soundVolume: Math.max(0, Math.min(1, s.soundVolume)),
-    ambientVolume: Math.max(0, Math.min(1, s.ambientVolume)),
-    ambientTrackId: normalizeAmbientTrackId(s.ambientTrackId),
-    ambientEnabled: Boolean(s.ambientEnabled),
-    ambientAutoPlayOnStart: s.ambientAutoPlayOnStart !== false,
+    theme:
+      s.theme === "light" || s.theme === "dark" || s.theme === "system"
+        ? s.theme
+        : "system",
     language: s.language === "de" ? "de" : "en",
     backgroundPreset: preset,
     backgroundSolid:
@@ -58,11 +55,9 @@ export function clampSettings(partial: Partial<Settings>): Settings {
         : DEFAULT_SETTINGS.backgroundSolid,
     backgroundImageDataUrl:
       typeof s.backgroundImageDataUrl === "string" ? s.backgroundImageDataUrl : null,
-    blockedSites: normalizeBlockedSites(
-      Array.isArray(s.blockedSites) ? s.blockedSites : DEFAULT_SETTINGS.blockedSites,
-    ),
-    focusModeEnabled: Boolean(s.focusModeEnabled),
-    blockDistractions: s.blockDistractions !== false,
-    strictFocus: s.strictFocus !== false,
+    ambientEnabled: Boolean(s.ambientEnabled),
+    ambientTrackId: normalizeAmbientTrackId(s.ambientTrackId),
+    ambientVolume: Math.max(0, Math.min(1, s.ambientVolume)),
+    ambientAutoPlayOnStart: s.ambientAutoPlayOnStart !== false,
   };
 }

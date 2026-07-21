@@ -19,7 +19,6 @@ import { ensureNotificationPermission } from "@/lib/notify";
 import { t } from "@/lib/i18n";
 import { cn } from "@/lib/utils";
 import { useAppStore } from "@/store/app-store";
-import { BlocklistSettings } from "@/components/FocusMode/BlocklistSettings";
 
 export function SettingsDialog() {
   const [open, setOpen] = useState(false);
@@ -48,8 +47,6 @@ export function SettingsDialog() {
         </DialogHeader>
 
         <div className="space-y-6">
-          <BlocklistSettings />
-
           <div className="flex items-center justify-between gap-4 rounded-lg border border-[var(--color-card-border)] p-3">
             <div className="space-y-1">
               <Label>{t(lang, "settings_auto_advance")}</Label>

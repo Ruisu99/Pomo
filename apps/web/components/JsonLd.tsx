@@ -24,9 +24,9 @@ export function JsonLd() {
     featureList: [
       "Pomodoro timer",
       "Task list with projects",
-      "Focus mode",
-      "Lofi Girl live stream",
+      "Lofi Girl and Jazz live streams",
       "Local-first statistics",
+      "English and German",
       "PWA offline support",
     ],
   };

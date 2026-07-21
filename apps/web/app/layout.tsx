@@ -2,7 +2,6 @@ import type { Metadata, Viewport } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import { AppProviders, TimerSync } from "@/components/providers";
 import { AppShell } from "@/components/app-shell";
-import { FocusGuard } from "@/components/FocusMode/FocusGuard";
 import {
   DocumentTitleSync,
   KeyboardShortcuts,
@@ -116,7 +115,6 @@ export default function RootLayout({
       >
         <AppProviders>
           <TimerSync />
-          <FocusGuard />
           <KeyboardShortcuts />
           <DocumentTitleSync />
           <HtmlLangSync />

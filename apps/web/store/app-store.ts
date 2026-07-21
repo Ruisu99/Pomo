@@ -16,7 +16,6 @@ import {
   createLocalStorageAdapter,
   DEFAULT_SETTINGS,
   isExpired,
-  isStrictFocusActive,
   nextPhaseAfterComplete,
   pauseTimer,
   remainingMs,
@@ -146,7 +145,6 @@ type AppState = {
 
   hydrate: () => void;
   patchSettings: (partial: Partial<Settings>) => void;
-  setFocusModeEnabled: (enabled: boolean) => void;
 
   addTask: (label: string, estimatedPomos: number, projectId?: string | null) => void;
   updateTaskEstimate: (id: string, estimatedPomos: number) => void;
@@ -189,21 +187,6 @@ const serverSnapshot = {
   timer: createIdleTimer(DEFAULT_SETTINGS, null),
 };
 
-function startIfIdle(get: () => AppState, set: (partial: Partial<AppState>) => void) {
-  const { timer, settings } = get();
-  if (timer.runState === "running") return;
-  const now = Date.now();
-  const next =
-    timer.runState === "paused"
-      ? resumeTimer(timer, now)
-      : startTimer({ ...timer, runState: "idle" }, settings, now);
-  set({ timer: next });
-  scheduleSave(get);
-  if (settings.ambientEnabled && settings.ambientAutoPlayOnStart) {
-    void playLofi();
-  }
-}
-
 export const useAppStore = create<AppState>((set, get) => ({
   ...serverSnapshot,
   milestoneMessage: null,
@@ -214,52 +197,18 @@ export const useAppStore = create<AppState>((set, get) => ({
     const raw = storage.load();
     const data = loadInitial();
     set({ ...data, milestoneMessage: null, projectFilterId: "all" });
+    // Default language is English; only keep a stored preference
     if (!raw?.settings || (raw.settings as Partial<Settings>).language == null) {
-      const browserLang = navigator.language?.toLowerCase().startsWith("de")
-        ? "de"
-        : "en";
-      set((s) => ({ settings: clampSettings({ ...s.settings, language: browserLang }) }));
+      set((s) => ({ settings: clampSettings({ ...s.settings, language: "en" }) }));
       scheduleSave(get);
     }
-    const { settings, timer } = get();
-    void syncAmbientFromSettings(settings);
-    if (settings.focusModeEnabled && timer.runState !== "running") {
-      startIfIdle(get, (partial) => set(partial));
-    }
+    void syncAmbientFromSettings(get().settings);
   },
 
   patchSettings: (partial) => {
     set((s) => ({ settings: clampSettings({ ...s.settings, ...partial }) }));
     const next = get().settings;
     void syncAmbientFromSettings(next);
-    scheduleSave(get);
-  },
-
-  setFocusModeEnabled: (enabled) => {
-    const prev = get();
-    if (enabled) {
-      set({
-        settings: clampSettings({
-          ...prev.settings,
-          focusModeEnabled: true,
-          autoAdvance: true,
-        }),
-      });
-      scheduleSave(get);
-      startIfIdle(get, (partial) => set(partial));
-      return;
-    }
-    const { timer, settings } = get();
-    if (
-      timer.runState === "running" &&
-      timer.phase === "work" &&
-      settings.strictFocus
-    ) {
-      set({ timer: pauseTimer(timer, settings, Date.now()) });
-    }
-    set({
-      settings: clampSettings({ ...get().settings, focusModeEnabled: false }),
-    });
     scheduleSave(get);
   },
 
@@ -453,7 +402,6 @@ export const useAppStore = create<AppState>((set, get) => ({
   pause: () => {
     const { timer, settings } = get();
     if (timer.runState !== "running") return;
-    if (isStrictFocusActive(timer, settings)) return;
     set({ timer: pauseTimer(timer, settings, Date.now()) });
     scheduleSave(get);
   },
@@ -464,7 +412,6 @@ export const useAppStore = create<AppState>((set, get) => ({
 
   resetPhaseProgress: () => {
     const { timer, settings } = get();
-    if (isStrictFocusActive(timer, settings)) return;
     set((s) => ({
       timer: {
         ...s.timer,
@@ -480,7 +427,6 @@ export const useAppStore = create<AppState>((set, get) => ({
 
   skipPhase: () => {
     const { settings, timer } = get();
-    if (isStrictFocusActive(timer, settings)) return;
     let t = timer;
     if (t.runState === "running") {
       t = pauseTimer(t, settings, Date.now());
@@ -564,7 +510,7 @@ export const useAppStore = create<AppState>((set, get) => ({
       milestoneMessage = milestoneForCount(today, settings.language);
     }
 
-    const shouldAutoAdvance = settings.autoAdvance || settings.focusModeEnabled;
+    const shouldAutoAdvance = settings.autoAdvance;
 
     if (shouldAutoAdvance) {
       const running = startTimer(afterPhase, settings, nowMs);
