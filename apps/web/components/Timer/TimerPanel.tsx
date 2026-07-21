@@ -1,10 +1,11 @@
 "use client";
 
 import { Pause, Play, RotateCcw, SkipForward } from "lucide-react";
-import { remainingMs } from "@pomodoro/core";
+import { isStrictFocusActive, remainingMs } from "@pomodoro/core";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { SettingsDialog } from "@/components/Settings/SettingsDialog";
+import { FocusModeToggle } from "@/components/FocusMode/FocusModeToggle";
 import { useTickMs } from "@/hooks/use-tick";
 import { t } from "@/lib/i18n";
 import { useAppStore } from "@/store/app-store";
@@ -56,8 +57,12 @@ export function TimerPanel() {
   const willLongBreakNext =
     timer.phase === "work" && currentWorkIndex >= totalInCycle;
 
+  const strict = isStrictFocusActive(timer, settings);
+
   return (
-    <Card className="mx-auto w-full max-w-lg border-[var(--color-card-border)]">
+    <div className="w-full space-y-4">
+      <FocusModeToggle />
+    <Card className="w-full border-[var(--color-card-border)] shadow-[0_0_0_1px_var(--focus-glow)]">
       <CardHeader className="flex flex-row items-start justify-between gap-4 space-y-0">
         <div>
           <p className="text-sm font-medium text-[var(--color-muted)]">
@@ -112,7 +117,13 @@ export function TimerPanel() {
 
         <div className="flex flex-wrap items-center justify-center gap-2">
           {timer.runState === "running" ? (
-            <Button type="button" variant="secondary" size="lg" onClick={() => pause()}>
+            <Button
+              type="button"
+              variant="secondary"
+              size="lg"
+              onClick={() => pause()}
+              disabled={strict}
+            >
               <Pause />
               {t(lang, "action_pause")}
             </Button>
@@ -129,16 +140,29 @@ export function TimerPanel() {
             variant="secondary"
             size="lg"
             onClick={() => resetPhaseProgress()}
+            disabled={strict}
           >
             <RotateCcw />
             {t(lang, "action_reset")}
           </Button>
-          <Button type="button" variant="secondary" size="lg" onClick={() => skipPhase()}>
+          <Button
+            type="button"
+            variant="secondary"
+            size="lg"
+            onClick={() => skipPhase()}
+            disabled={strict}
+          >
             <SkipForward />
             {t(lang, "action_skip")}
           </Button>
         </div>
+        {strict ? (
+          <p className="text-center text-xs text-[var(--color-muted)]">
+            {t(lang, "focus_strict_hint")}
+          </p>
+        ) : null}
       </CardContent>
     </Card>
+    </div>
   );
 }

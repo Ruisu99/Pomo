@@ -19,6 +19,7 @@ import { ensureNotificationPermission } from "@/lib/notify";
 import { t } from "@/lib/i18n";
 import { cn } from "@/lib/utils";
 import { useAppStore } from "@/store/app-store";
+import { BlocklistSettings } from "@/components/FocusMode/BlocklistSettings";
 
 export function SettingsDialog() {
   const [open, setOpen] = useState(false);
@@ -47,6 +48,8 @@ export function SettingsDialog() {
         </DialogHeader>
 
         <div className="space-y-6">
+          <BlocklistSettings />
+
           <div className="flex items-center justify-between gap-4 rounded-lg border border-[var(--color-card-border)] p-3">
             <div className="space-y-1">
               <Label>{t(lang, "settings_auto_advance")}</Label>
@@ -94,6 +97,58 @@ export function SettingsDialog() {
                 />
               </div>
             ) : null}
+          </div>
+
+          <div className="space-y-3 rounded-lg border border-[var(--color-card-border)] p-3">
+            <div className="flex items-center justify-between gap-4">
+              <div className="space-y-1">
+                <Label>{t(lang, "ambient_title")}</Label>
+                <p className="text-xs text-[var(--color-muted)]">
+                  {t(lang, "ambient_desc")}
+                </p>
+              </div>
+              <Switch
+                checked={settings.ambientEnabled}
+                onCheckedChange={(checked) =>
+                  useAppStore.getState().setAmbientEnabled(checked)
+                }
+              />
+            </div>
+            <div className="flex items-center justify-between gap-4">
+              <div className="space-y-1">
+                <Label>{t(lang, "ambient_autoplay")}</Label>
+                <p className="text-xs text-[var(--color-muted)]">
+                  {t(lang, "ambient_autoplay_desc")}
+                </p>
+              </div>
+              <Switch
+                checked={settings.ambientAutoPlayOnStart}
+                onCheckedChange={(checked) =>
+                  patchSettings({ ambientAutoPlayOnStart: checked })
+                }
+              />
+            </div>
+            <div className="space-y-2">
+              <div className="flex items-center justify-between">
+                <span className="text-xs text-[var(--color-muted)]">
+                  {t(lang, "ambient_volume")}
+                </span>
+                <span className="text-xs text-[var(--color-muted)]">
+                  {Math.round(settings.ambientVolume * 100)}%
+                </span>
+              </div>
+              <Slider
+                value={[Math.round(settings.ambientVolume * 100)]}
+                min={0}
+                max={100}
+                step={5}
+                onValueChange={(v: number[]) =>
+                  useAppStore
+                    .getState()
+                    .setAmbientVolumeSetting(((v[0] ?? 35) as number) / 100)
+                }
+              />
+            </div>
           </div>
 
           <div className="space-y-2">

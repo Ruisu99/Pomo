@@ -1,12 +1,27 @@
 export type SessionType = "work" | "shortBreak" | "longBreak";
 
+export type AmbientTrackId =
+  | "lofi"
+  | "rain"
+  | "cafe"
+  | "whitenoise"
+  | "forest";
+
 export type Session = {
   id: string;
   taskId: string | null;
+  projectId: string | null;
   startedAt: number;
   duration: number;
   type: SessionType;
   completed: boolean;
+};
+
+export type Project = {
+  id: string;
+  name: string;
+  color: string;
+  archived: boolean;
 };
 
 export type Task = {
@@ -15,6 +30,16 @@ export type Task = {
   estimatedPomos: number;
   completedPomos: number;
   done: boolean;
+  projectId: string | null;
+  notes: string;
+  createdAt: number;
+};
+
+export type TaskTemplate = {
+  id: string;
+  label: string;
+  estimatedPomos: number;
+  projectId: string | null;
 };
 
 export type ThemeMode = "light" | "dark" | "system";
@@ -34,6 +59,14 @@ export type Settings = {
   longBreak: number;
   longBreakAfter: number;
   autoAdvance: boolean;
+  /** Master switch: auto-starts timer, auto-advances phases, enables focus rules */
+  focusModeEnabled: boolean;
+  /** Block distracting websites during work (requires browser extension) */
+  blockDistractions: boolean;
+  /** Domains to block during work, e.g. youtube.com */
+  blockedSites: string[];
+  /** Disallow pause/skip/reset during work when focus mode is on */
+  strictFocus: boolean;
   soundEnabled: boolean;
   soundVolume: number;
   theme: ThemeMode;
@@ -41,6 +74,11 @@ export type Settings = {
   backgroundPreset: BackgroundPreset;
   backgroundSolid: string;
   backgroundImageDataUrl: string | null;
+  /** Ambient / lo-fi background audio */
+  ambientEnabled: boolean;
+  ambientTrackId: AmbientTrackId;
+  ambientVolume: number;
+  ambientAutoPlayOnStart: boolean;
 };
 
 export type PhaseKind = "work" | "shortBreak" | "longBreak";
@@ -64,9 +102,20 @@ export type TimerSnapshot = {
 };
 
 export type AppPersistedState = {
-  version: 1;
+  version: 2;
   settings: Settings;
   tasks: Task[];
   sessions: Session[];
+  projects: Project[];
+  templates: TaskTemplate[];
   timer: TimerSnapshot;
+};
+
+/** Legacy v1 shape for migration */
+export type AppPersistedStateV1 = {
+  version: 1;
+  settings: Partial<Settings> & Record<string, unknown>;
+  tasks: Array<Partial<Task> & { id: string; label: string }>;
+  sessions: Array<Partial<Session> & { id: string }>;
+  timer: Partial<TimerSnapshot>;
 };

@@ -1,11 +1,23 @@
 # Pomodoro
 
-Local-first Pomodoro web app (monorepo): focused timer, lightweight tasks, streaks, and a simple 7‑day chart.
+Local-first Pomodoro web app (monorepo): focused timer, tasks with projects & templates, ambient/lo-fi sound, streaks, and reports with CSV export.
 
 ## Structure
 
 - [`apps/web`](apps/web): Next.js 15 + Tailwind v4 + Zustand UI
-- [`packages/core`](packages/core): pure TypeScript domain logic (timer, streaks, storage types)
+- [`packages/core`](packages/core): pure TypeScript domain logic (timer, streaks, storage, estimates)
+
+## Features
+
+- Pomodoro timer with focus mode + site blocking (browser extension)
+- Ambient / lo-fi loops (local WAV files under `apps/web/public/audio/`)
+- Projects, task templates, finish-time estimate
+- Stats: focus minutes, project breakdown, CSV export
+- Keyboard: `Space` start/pause · `N` skip · `M` ambient mute/play
+
+## Audio
+
+Ambient loops in `apps/web/public/audio/` are procedurally generated (CC0 / original). No third-party streaming.
 
 ## Requirements
 

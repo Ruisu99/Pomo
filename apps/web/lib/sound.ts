@@ -1,3 +1,5 @@
+import { duckAmbient } from "./ambient-player";
+
 let audioCtx: AudioContext | null = null;
 
 function getCtx(): AudioContext | null {
@@ -9,6 +11,7 @@ function getCtx(): AudioContext | null {
 }
 
 export async function playPhaseCompleteChime(volume: number): Promise<void> {
+  duckAmbient(450);
   const ctx = getCtx();
   if (!ctx) return;
   if (ctx.state === "suspended") {

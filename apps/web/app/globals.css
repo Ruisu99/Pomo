@@ -59,9 +59,19 @@ body {
   -webkit-font-smoothing: antialiased;
 }
 
-/* subtle glass look for cards */
+/* subtle glass look for cards / docks */
 @supports (backdrop-filter: blur(12px)) {
   .glass {
-    backdrop-filter: blur(12px);
+    backdrop-filter: blur(14px) saturate(1.15);
   }
+}
+
+/* calmer focus composition */
+:root {
+  --focus-glow: color-mix(in oklch, var(--color-primary) 18%, transparent);
+}
+
+.dark,
+:root:not(.light) {
+  --focus-glow: color-mix(in oklch, var(--color-primary) 28%, transparent);
 }

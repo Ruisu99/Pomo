@@ -1,11 +1,13 @@
+import { AmbientDock } from "@/components/Ambient/AmbientDock";
 import { TaskList } from "@/components/TaskList/TaskList";
 import { TimerPanel } from "@/components/Timer/TimerPanel";
 import { SessionSettingsCard } from "@/components/SessionSettings/SessionSettingsCard";
 
 export default function Home() {
   return (
-    <div className="space-y-6">
+    <div className="mx-auto flex w-full max-w-lg flex-col items-stretch gap-5">
       <TimerPanel />
+      <AmbientDock />
       <TaskList />
       <SessionSettingsCard />
     </div>

@@ -38,6 +38,36 @@ const en: Dict = {
   tasks_mark_done: "Mark done",
   tasks_mark_not_done: "Mark not done",
   tasks_remove: "Remove task",
+  tasks_project: "Project",
+
+  projects_all: "All",
+  projects_none: "No project",
+  projects_add: "Project",
+  projects_create: "Create",
+  projects_placeholder: "Project name",
+  projects_remove: "Remove project",
+
+  templates_title: "Templates",
+  templates_hint: "Click a template to add it. Save tasks with the bookmark icon.",
+  templates_add: "Add from template",
+  templates_save: "Save as template",
+  templates_remove: "Remove template",
+
+  eta_empty: "Add estimated pomodoros to see when you’ll finish.",
+  eta_label: "Finish around {time} · {count} pomodoros left",
+
+  ambient_title: "Focus sound",
+  ambient_desc: "Lo-fi and ambient loops — stays local in this browser.",
+  ambient_play: "Play ambient",
+  ambient_pause: "Pause ambient",
+  ambient_volume: "Ambient volume",
+  ambient_lofi: "Lo-fi",
+  ambient_rain: "Rain",
+  ambient_cafe: "Café",
+  ambient_whitenoise: "White noise",
+  ambient_forest: "Forest",
+  ambient_autoplay: "Auto-play with timer",
+  ambient_autoplay_desc: "Start ambient sound when a focus session starts.",
 
   stats_streak: "Streak",
   stats_days_in_a_row: "days in a row",
@@ -46,6 +76,13 @@ const en: Dict = {
   stats_this_week: "This week",
   stats_last_7_days: "Last 7 days",
   stats_tooltip_sessions: "Sessions",
+  stats_minutes: "min",
+  stats_month_minutes: "This month",
+  stats_week_minutes: "Focus minutes (week)",
+  stats_by_project: "Focus by project (month)",
+  stats_by_project_empty: "Complete focus sessions with projects to see a breakdown.",
+  stats_no_project: "No project",
+  stats_export_csv: "Export CSV",
 
   settings_aria: "Settings",
   settings_title: "Settings",
@@ -88,6 +125,31 @@ const en: Dict = {
   settings_notifications_desc:
     "Browser notifications when a phase ends (useful in the background).",
   settings_enable_notifications: "Enable notifications",
+
+  focus_mode_title: "Focus mode",
+  focus_mode_desc: "Turn on to auto-start your pomodoro cycle and stay accountable.",
+  focus_mode_active: "Focus mode is on — timer runs automatically through work and breaks.",
+  focus_mode_active_strict: "Focus mode is on — distractions blocked, no skipping work sessions.",
+  focus_strict_hint: "Pause, skip, and reset are locked during work. Turn off focus mode to stop.",
+  focus_guard_kicker: "Focus session",
+  focus_guard_title: "You left during a focus block",
+  focus_guard_desc: "Your timer is still running. Get back to work — blocked sites stay blocked.",
+  focus_guard_back: "Back to focus",
+
+  settings_block_distractions: "Block distracting sites",
+  settings_block_distractions_desc:
+    "During work sessions, block listed websites (requires the Pomo browser extension).",
+  settings_strict_focus: "Strict focus",
+  settings_strict_focus_desc:
+    "Lock pause, skip, and reset during work. Turn off focus mode to exit.",
+  settings_blocked_sites: "Blocked websites",
+  settings_blocked_sites_hint:
+    "Install the extension from the extension/ folder in Chrome or Edge (Load unpacked).",
+  settings_blocked_sites_placeholder: "e.g. youtube.com",
+  settings_remove_site: "Remove {site}",
+  settings_extension_title: "Browser extension",
+  settings_extension_desc:
+    "For system-wide site blocking, load the Pomo Focus extension in Chrome/Edge.",
 
   offline_title: "You’re offline",
   offline_desc:
@@ -139,6 +201,36 @@ const de: Dict = {
   tasks_mark_done: "Als erledigt markieren",
   tasks_mark_not_done: "Als nicht erledigt markieren",
   tasks_remove: "Aufgabe entfernen",
+  tasks_project: "Projekt",
+
+  projects_all: "Alle",
+  projects_none: "Kein Projekt",
+  projects_add: "Projekt",
+  projects_create: "Anlegen",
+  projects_placeholder: "Projektname",
+  projects_remove: "Projekt entfernen",
+
+  templates_title: "Vorlagen",
+  templates_hint: "Vorlage antippen zum Hinzufügen. Aufgaben mit Lesezeichen speichern.",
+  templates_add: "Aus Vorlage hinzufügen",
+  templates_save: "Als Vorlage speichern",
+  templates_remove: "Vorlage entfernen",
+
+  eta_empty: "Schätze Pomodoros, um die Fertigstellung zu sehen.",
+  eta_label: "Fertig gegen {time} · {count} Pomodoros übrig",
+
+  ambient_title: "Fokus-Sound",
+  ambient_desc: "Lo-Fi- und Ambient-Loops — lokal in diesem Browser.",
+  ambient_play: "Ambient abspielen",
+  ambient_pause: "Ambient pausieren",
+  ambient_volume: "Ambient-Lautstärke",
+  ambient_lofi: "Lo-Fi",
+  ambient_rain: "Regen",
+  ambient_cafe: "Café",
+  ambient_whitenoise: "Rauschen",
+  ambient_forest: "Wald",
+  ambient_autoplay: "Mit Timer starten",
+  ambient_autoplay_desc: "Ambient-Sound starten, wenn eine Fokus-Session beginnt.",
 
   stats_streak: "Serie",
   stats_days_in_a_row: "Tage am Stück",
@@ -147,6 +239,13 @@ const de: Dict = {
   stats_this_week: "Diese Woche",
   stats_last_7_days: "Letzte 7 Tage",
   stats_tooltip_sessions: "Sessions",
+  stats_minutes: "Min",
+  stats_month_minutes: "Dieser Monat",
+  stats_week_minutes: "Fokusminuten (Woche)",
+  stats_by_project: "Fokus nach Projekt (Monat)",
+  stats_by_project_empty: "Schließe Fokus-Sessions mit Projekten ab, um die Aufteilung zu sehen.",
+  stats_no_project: "Kein Projekt",
+  stats_export_csv: "CSV exportieren",
 
   settings_aria: "Einstellungen",
   settings_title: "Einstellungen",
@@ -190,6 +289,36 @@ const de: Dict = {
   settings_notifications_desc:
     "Browser-Benachrichtigungen am Phasenende (hilfreich im Hintergrund).",
   settings_enable_notifications: "Benachrichtigungen aktivieren",
+
+  focus_mode_title: "Fokusmodus",
+  focus_mode_desc:
+    "Einschalten startet deinen Pomodoro-Zyklus automatisch und hält dich accountable.",
+  focus_mode_active:
+    "Fokusmodus aktiv — Timer läuft automatisch durch Arbeit und Pausen.",
+  focus_mode_active_strict:
+    "Fokusmodus aktiv — Ablenkungen blockiert, Arbeitsphasen nicht überspringbar.",
+  focus_strict_hint:
+    "Pause, Überspringen und Zurücksetzen sind während der Arbeit gesperrt. Fokusmodus ausschalten zum Beenden.",
+  focus_guard_kicker: "Fokus-Session",
+  focus_guard_title: "Du warst weg während der Fokuszeit",
+  focus_guard_desc:
+    "Dein Timer läuft noch. Zurück an die Arbeit — blockierte Seiten bleiben blockiert.",
+  focus_guard_back: "Zurück zum Fokus",
+
+  settings_block_distractions: "Ablenkende Seiten blockieren",
+  settings_block_distractions_desc:
+    "Während der Arbeit werden gelistete Websites blockiert (Pomo Browser-Erweiterung nötig).",
+  settings_strict_focus: "Strikter Fokus",
+  settings_strict_focus_desc:
+    "Pause, Überspringen und Zurücksetzen während der Arbeit sperren. Fokusmodus ausschalten zum Beenden.",
+  settings_blocked_sites: "Blockierte Websites",
+  settings_blocked_sites_hint:
+    "Erweiterung aus dem extension/ Ordner in Chrome oder Edge laden (Entpackte Erweiterung).",
+  settings_blocked_sites_placeholder: "z.B. youtube.com",
+  settings_remove_site: "{site} entfernen",
+  settings_extension_title: "Browser-Erweiterung",
+  settings_extension_desc:
+    "Für systemweite Seitenblockierung die Pomo Focus Erweiterung in Chrome/Edge laden.",
 
   offline_title: "Du bist offline",
   offline_desc:
