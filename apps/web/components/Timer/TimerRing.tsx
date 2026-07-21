@@ -24,8 +24,9 @@ export function TimerRing({ nowMs }: { nowMs: number }) {
     return { rem, total: totalMs };
   }, [timer, settings, nowMs]);
 
-  const progress = total > 0 ? 1 - rem / total : 0;
-  const offset = C * (1 - Math.max(0, Math.min(1, progress)));
+  // Remaining fraction: 1 = full ring at start, 0 = empty when time is up
+  const remaining = total > 0 ? Math.max(0, Math.min(1, rem / total)) : 0;
+  const offset = C * (1 - remaining);
 
   const gradId = timer.phase === "work" ? "gradWork" : "gradBreak";
   const glowId = "ringGlow";

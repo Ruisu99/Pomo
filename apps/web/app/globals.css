@@ -43,20 +43,31 @@
   --color-accent: oklch(0.28 0.04 25);
 }
 
-html,
-body {
-  height: 100%;
+html {
+  min-height: 100%;
 }
 
 body {
-  background: var(--app-bg, var(--color-background));
+  position: relative;
+  min-height: 100dvh;
+  background-color: var(--app-bg, var(--color-background));
+  color: var(--color-foreground);
+  font-family: var(--font-sans);
+  -webkit-font-smoothing: antialiased;
+}
+
+/* Full-viewport art layer — never cuts off when the page scrolls */
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+  background-color: var(--app-bg, var(--color-background));
   background-image: var(--app-bg-image, none);
   background-repeat: no-repeat;
   background-size: cover;
   background-position: center;
-  color: var(--color-foreground);
-  font-family: var(--font-sans);
-  -webkit-font-smoothing: antialiased;
 }
 
 /* subtle glass look for cards / docks */

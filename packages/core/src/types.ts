@@ -1,11 +1,6 @@
 export type SessionType = "work" | "shortBreak" | "longBreak";
 
-export type AmbientTrackId =
-  | "lofi"
-  | "rain"
-  | "cafe"
-  | "whitenoise"
-  | "forest";
+export type AmbientTrackId = "lofi" | "jazz";
 
 export type Session = {
   id: string;

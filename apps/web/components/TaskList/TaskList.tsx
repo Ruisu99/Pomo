@@ -113,12 +113,7 @@ export function TaskList() {
         </form>
 
         <div className="space-y-2">
-          {sorted.length === 0 ? (
-            <p className="text-sm text-[var(--color-muted)]">
-              {t(lang, "tasks_empty")}
-            </p>
-          ) : (
-            sorted.map((task) => {
+          {sorted.map((task) => {
               const active = activeId === task.id;
               const project = task.projectId
                 ? projects.find((p) => p.id === task.projectId)
@@ -234,8 +229,7 @@ export function TaskList() {
                   </div>
                 </div>
               );
-            })
-          )}
+            })}
         </div>
       </CardContent>
     </Card>

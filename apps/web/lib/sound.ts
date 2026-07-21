@@ -1,17 +1,20 @@
-import { duckAmbient } from "./ambient-player";
+import { duckLofi } from "./lofi-player";
 
 let audioCtx: AudioContext | null = null;
 
 function getCtx(): AudioContext | null {
   if (typeof window === "undefined") return null;
-  const Ctx = window.AudioContext ?? (window as unknown as { webkitAudioContext: typeof AudioContext }).webkitAudioContext;
+  const Ctx =
+    window.AudioContext ??
+    (window as unknown as { webkitAudioContext: typeof AudioContext })
+      .webkitAudioContext;
   if (!Ctx) return null;
   if (!audioCtx) audioCtx = new Ctx();
   return audioCtx;
 }
 
 export async function playPhaseCompleteChime(volume: number): Promise<void> {
-  duckAmbient(450);
+  duckLofi(450);
   const ctx = getCtx();
   if (!ctx) return;
   if (ctx.state === "suspended") {

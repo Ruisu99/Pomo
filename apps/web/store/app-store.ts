@@ -24,11 +24,10 @@ import {
   startTimer,
 } from "@pomodoro/core";
 import {
-  pauseAmbient,
-  playAmbient,
-  setAmbientTrack,
-  setAmbientVolume,
-} from "@/lib/ambient-player";
+  pauseLofi,
+  playLofi,
+  setLofiVolume,
+} from "@/lib/lofi-player";
 import { notifyPhaseComplete } from "@/lib/notify";
 import { playPhaseCompleteChime } from "@/lib/sound";
 
@@ -125,14 +124,13 @@ async function syncAmbientFromSettings(
   settings: Settings,
   opts?: { forcePlay?: boolean; forcePause?: boolean },
 ) {
-  await setAmbientVolume(settings.ambientVolume);
-  await setAmbientTrack(settings.ambientTrackId);
+  await setLofiVolume(settings.ambientVolume);
   if (opts?.forcePause || !settings.ambientEnabled) {
-    pauseAmbient();
+    pauseLofi();
     return;
   }
   if (opts?.forcePlay) {
-    await playAmbient(settings.ambientTrackId);
+    await playLofi();
   }
 }
 
@@ -202,7 +200,7 @@ function startIfIdle(get: () => AppState, set: (partial: Partial<AppState>) => v
   set({ timer: next });
   scheduleSave(get);
   if (settings.ambientEnabled && settings.ambientAutoPlayOnStart) {
-    void playAmbient(settings.ambientTrackId);
+    void playLofi();
   }
 }
 
@@ -412,11 +410,6 @@ export const useAppStore = create<AppState>((set, get) => ({
     set((s) => ({
       settings: clampSettings({ ...s.settings, ambientTrackId: trackId }),
     }));
-    const { settings } = get();
-    void setAmbientTrack(trackId);
-    if (settings.ambientEnabled) {
-      void playAmbient(trackId);
-    }
     scheduleSave(get);
   },
 
@@ -424,7 +417,7 @@ export const useAppStore = create<AppState>((set, get) => ({
     set((s) => ({
       settings: clampSettings({ ...s.settings, ambientVolume: volume }),
     }));
-    void setAmbientVolume(volume);
+    void setLofiVolume(volume);
     scheduleSave(get);
   },
 
@@ -435,10 +428,10 @@ export const useAppStore = create<AppState>((set, get) => ({
       return;
     }
     void (async () => {
-      const { getAmbientState } = await import("@/lib/ambient-player");
-      const state = getAmbientState();
-      if (state.playing) pauseAmbient();
-      else await playAmbient(settings.ambientTrackId);
+      const { getLofiState } = await import("@/lib/lofi-player");
+      const state = getLofiState();
+      if (state.playing) pauseLofi();
+      else await playLofi();
     })();
   },
 
@@ -453,7 +446,7 @@ export const useAppStore = create<AppState>((set, get) => ({
     set({ timer: next });
     scheduleSave(get);
     if (settings.ambientEnabled && settings.ambientAutoPlayOnStart) {
-      void playAmbient(settings.ambientTrackId);
+      void playLofi();
     }
   },
 

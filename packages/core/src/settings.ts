@@ -1,14 +1,6 @@
 import { DEFAULT_BLOCKED_SITES, normalizeBlockedSites } from "./focus";
 import type { AmbientTrackId, Settings } from "./types";
 
-const AMBIENT_TRACKS: AmbientTrackId[] = [
-  "lofi",
-  "rain",
-  "cafe",
-  "whitenoise",
-  "forest",
-];
-
 export const DEFAULT_SETTINGS: Settings = {
   workDuration: 25 * 60,
   shortBreak: 5 * 60,
@@ -33,9 +25,8 @@ export const DEFAULT_SETTINGS: Settings = {
 };
 
 function normalizeAmbientTrackId(id: unknown): AmbientTrackId {
-  return AMBIENT_TRACKS.includes(id as AmbientTrackId)
-    ? (id as AmbientTrackId)
-    : "lofi";
+  if (id === "jazz") return "jazz";
+  return "lofi";
 }
 
 export function clampSettings(partial: Partial<Settings>): Settings {

@@ -2,7 +2,7 @@
 
 import { useEffect } from "react";
 import { remainingMs } from "@pomodoro/core";
-import { pauseAmbient, playAmbient } from "@/lib/ambient-player";
+import { pauseLofi, playLofi } from "@/lib/lofi-player";
 import { useTickMs } from "@/hooks/use-tick";
 import { useAppStore } from "@/store/app-store";
 
@@ -24,7 +24,7 @@ function isTypingTarget(el: EventTarget | null): boolean {
   );
 }
 
-/** Space start/pause, N skip, M mute ambient — ignored while typing */
+/** Space start/pause, N skip, M mute Lofi Girl — ignored while typing */
 export function KeyboardShortcuts() {
   useEffect(() => {
     const onKey = (e: KeyboardEvent) => {
@@ -54,10 +54,10 @@ export function KeyboardShortcuts() {
           return;
         }
         void (async () => {
-          const { getAmbientState } = await import("@/lib/ambient-player");
-          const state = getAmbientState();
-          if (state.playing) pauseAmbient();
-          else await playAmbient(settings.ambientTrackId);
+          const { getLofiState } = await import("@/lib/lofi-player");
+          const state = getLofiState();
+          if (state.playing) pauseLofi();
+          else await playLofi();
         })();
       }
     };

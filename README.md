@@ -17,7 +17,7 @@ Local-first Pomodoro web app (monorepo): focused timer, tasks with projects & te
 
 ## Audio
 
-Ambient loops in `apps/web/public/audio/` are procedurally generated (CC0 / original). No third-party streaming.
+Focus music uses the [Lofi Girl](https://www.youtube.com/watch?v=X4VbdwhkE10) YouTube live stream (embedded). Local WAV loops under `apps/web/public/audio/` remain as optional assets.
 
 ## Requirements
 
@@ -40,6 +40,8 @@ pnpm build
 ## Deploy
 
 The easiest path is connecting the GitHub repo to [Vercel](https://vercel.com/) (import project → root: `apps/web` or monorepo defaults). CI runs on every push via GitHub Actions.
+
+Set `NEXT_PUBLIC_SITE_URL` to your production domain (e.g. `https://pomo.example.com`) so sitemap, canonical URLs, and Open Graph resolve correctly. See `apps/web/.env.example`.
 
 ## iOS later
 

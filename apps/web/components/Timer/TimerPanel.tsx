@@ -91,11 +91,7 @@ export function TimerPanel() {
                 {activeTask.label}
               </span>
             </p>
-          ) : (
-            <p className="mt-2 text-sm text-[var(--color-muted)]">
-              {t(lang, "timer_pick_task")}
-            </p>
-          )}
+          ) : null}
         </div>
         <SettingsDialog />
       </CardHeader>

@@ -60,9 +60,6 @@ export function TemplateList() {
           );
         })}
       </div>
-      <p className="text-[10px] text-[var(--color-muted)]">
-        {t(lang, "templates_hint")}
-      </p>
     </div>
   );
 }

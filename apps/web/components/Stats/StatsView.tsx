@@ -198,16 +198,12 @@ export function StatsView() {
         </CardContent>
       </Card>
 
+      {byProject.length === 0 ? null : (
       <Card className="border-[var(--color-card-border)]">
         <CardHeader>
           <CardTitle className="text-lg">{t(lang, "stats_by_project")}</CardTitle>
         </CardHeader>
         <CardContent className="h-72">
-          {byProject.length === 0 ? (
-            <p className="text-sm text-[var(--color-muted)]">
-              {t(lang, "stats_by_project_empty")}
-            </p>
-          ) : (
             <ResponsiveContainer width="100%" height="100%">
               <PieChart>
                 <Pie
@@ -238,9 +234,9 @@ export function StatsView() {
                 />
               </PieChart>
             </ResponsiveContainer>
-          )}
         </CardContent>
       </Card>
+      )}
     </div>
   );
 }
