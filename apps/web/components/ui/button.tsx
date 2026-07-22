@@ -11,15 +11,15 @@ const buttonVariants = cva(
         default:
           "bg-[var(--color-primary)] text-[var(--color-primary-foreground)] shadow-[0_10px_26px_-18px_rgba(0,0,0,0.45)] hover:brightness-[1.03] hover:shadow-[0_14px_34px_-20px_rgba(0,0,0,0.55)]",
         secondary:
-          "border border-[color-mix(in_oklch,white,transparent_72%)] bg-[color-mix(in_oklch,white,transparent_86%)] text-[var(--color-foreground)] shadow-[inset_0_1px_0_rgba(255,255,255,0.35)] backdrop-blur-md hover:bg-[color-mix(in_oklch,white,transparent_78%)]",
+          "border border-[color-mix(in_oklch,white,transparent_72%)] bg-[color-mix(in_oklch,white,transparent_88%)] text-[var(--color-foreground)] shadow-[inset_0_1px_0_rgba(255,255,255,0.28)] backdrop-blur-md hover:bg-[color-mix(in_oklch,white,transparent_78%)]",
         ghost:
-          "text-[var(--color-foreground)] hover:bg-[var(--color-accent)] hover:shadow-[0_10px_26px_-22px_rgba(0,0,0,0.35)]",
+          "text-[var(--color-muted)] hover:bg-[color-mix(in_oklch,white,transparent_86%)] hover:text-[var(--color-foreground)]",
         link: "text-[var(--color-primary)] underline-offset-4 hover:underline",
       },
       size: {
         default: "h-10 px-4 py-2",
-        sm: "h-9 rounded-md px-3",
-        lg: "h-11 rounded-md px-8",
+        sm: "h-9 rounded-xl px-3",
+        lg: "h-11 rounded-xl px-8",
         icon: "h-10 w-10",
       },
     },

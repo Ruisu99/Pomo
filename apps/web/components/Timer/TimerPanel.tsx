@@ -3,7 +3,7 @@
 import { Pause, Play, RotateCcw, SkipForward } from "lucide-react";
 import { remainingMs } from "@pomodoro/core";
 import { Button } from "@/components/ui/button";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Card, CardContent, CardHeader } from "@/components/ui/card";
 import { SettingsDialog } from "@/components/Settings/SettingsDialog";
 import { useTickMs } from "@/hooks/use-tick";
 import { t } from "@/lib/i18n";
@@ -57,47 +57,45 @@ export function TimerPanel() {
     timer.phase === "work" && currentWorkIndex >= totalInCycle;
 
   return (
-    <Card className="w-full">
-      <CardHeader className="flex flex-row items-start justify-between gap-4 space-y-0">
-        <div>
-          <p className="text-sm font-medium text-[var(--color-muted)]">
+    <Card className="w-full overflow-hidden">
+      <CardHeader className="flex flex-row items-center justify-between gap-4 space-y-0 pb-2">
+        <div className="min-w-0">
+          <p className="text-sm font-medium tracking-wide text-[var(--color-muted)]">
             {phaseTitle(lang, timer.phase)}
           </p>
-          <CardTitle className="mt-1 text-3xl tabular-nums tracking-tight">
+          {activeTask ? (
+            <p className="mt-1 truncate text-sm text-[var(--color-foreground)]">
+              {activeTask.label}
+            </p>
+          ) : null}
+        </div>
+        <SettingsDialog />
+      </CardHeader>
+      <CardContent className="space-y-5">
+        <TimerRing nowMs={nowMs}>
+          <p className="font-mono text-[2.75rem] font-semibold leading-none tracking-tight tabular-nums sm:text-5xl">
             {formatClock(rem)}
-          </CardTitle>
-          <div className="mt-2 flex flex-wrap items-center gap-2">
-            <span className="rounded-full border border-[color-mix(in_oklch,var(--color-card-border),transparent_30%)] bg-[color-mix(in_oklch,var(--color-card),transparent_40%)] px-2 py-1 text-xs font-medium text-[var(--color-foreground)]">
+          </p>
+          <div className="mt-3 flex flex-wrap items-center justify-center gap-1.5">
+            <span className="pill pill-active">
               {t(lang, "timer_session_of", {
                 current: currentWorkIndex,
                 total: totalInCycle,
               })}
             </span>
             {willLongBreakNext ? (
-              <span className="rounded-full border border-[color-mix(in_oklch,var(--color-card-border),transparent_30%)] bg-[color-mix(in_oklch,var(--color-accent),transparent_30%)] px-2 py-1 text-xs font-medium text-[var(--color-foreground)]">
+              <span className="pill">
                 {t(lang, "timer_long_break_next")}
               </span>
             ) : null}
           </div>
-          {activeTask ? (
-            <p className="mt-2 text-sm text-[var(--color-muted)]">
-              {t(lang, "timer_on")}:{" "}
-              <span className="font-medium text-[var(--color-foreground)]">
-                {activeTask.label}
-              </span>
-            </p>
-          ) : null}
-        </div>
-        <SettingsDialog />
-      </CardHeader>
-      <CardContent className="space-y-6">
-        <TimerRing nowMs={nowMs} />
+        </TimerRing>
 
         {milestoneMessage ? (
           <button
             type="button"
             onClick={() => clearMilestone()}
-            className="w-full rounded-lg border border-[var(--color-card-border)] bg-[var(--color-accent)] px-4 py-3 text-left text-sm text-[var(--color-foreground)] transition-colors hover:bg-[var(--color-card-border)]"
+            className="inset-panel w-full text-left text-sm text-[var(--color-foreground)] transition-colors hover:bg-[color-mix(in_oklch,var(--color-accent),transparent_30%)]"
           >
             {milestoneMessage}
             <span className="mt-1 block text-xs text-[var(--color-muted)]">
@@ -127,21 +125,23 @@ export function TimerPanel() {
           )}
           <Button
             type="button"
-            variant="secondary"
-            size="lg"
+            variant="ghost"
+            size="icon"
+            aria-label={t(lang, "action_reset")}
+            title={t(lang, "action_reset")}
             onClick={() => resetPhaseProgress()}
           >
             <RotateCcw />
-            {t(lang, "action_reset")}
           </Button>
           <Button
             type="button"
-            variant="secondary"
-            size="lg"
+            variant="ghost"
+            size="icon"
+            aria-label={t(lang, "action_skip")}
+            title={t(lang, "action_skip")}
             onClick={() => skipPhase()}
           >
             <SkipForward />
-            {t(lang, "action_skip")}
           </Button>
         </div>
       </CardContent>

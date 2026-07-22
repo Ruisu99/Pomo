@@ -7,7 +7,7 @@ import { SessionSettingsCard } from "@/components/SessionSettings/SessionSetting
 
 export function HomeApp() {
   return (
-    <div className="mx-auto flex w-full max-w-lg flex-col items-stretch gap-5">
+    <div className="mx-auto flex w-full max-w-lg flex-col items-stretch gap-4 sm:gap-5">
       <TimerPanel />
       <AmbientDock />
       <TaskList />

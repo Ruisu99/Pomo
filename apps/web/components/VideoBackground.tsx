@@ -37,10 +37,15 @@ export function VideoBackground() {
     <div
       className="pointer-events-none fixed inset-0 z-[-1] overflow-hidden"
       aria-hidden
+      style={{ transform: "translateZ(0)" }}
     >
       <video
         ref={videoRef}
         className="absolute inset-0 size-full object-cover"
+        style={{
+          transform: "translateZ(0)",
+          backfaceVisibility: "hidden",
+        }}
         src={PIXEL_CITY_VIDEO_SRC}
         autoPlay
         muted
@@ -48,8 +53,8 @@ export function VideoBackground() {
         playsInline
         preload="auto"
       />
-      {/* Soft scrim so cards stay readable over bright sky */}
-      <div className="absolute inset-0 bg-[linear-gradient(180deg,rgba(8,10,18,0.18)_0%,rgba(8,10,18,0.38)_100%)]" />
+      {/* Darker scrim keeps frosted cards + white text readable */}
+      <div className="absolute inset-0 bg-[linear-gradient(180deg,rgba(8,10,18,0.42)_0%,rgba(8,10,18,0.58)_55%,rgba(8,10,18,0.68)_100%)]" />
     </div>
   );
 }

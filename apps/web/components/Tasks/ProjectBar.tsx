@@ -25,24 +25,14 @@ export function ProjectBar() {
         <button
           type="button"
           onClick={() => setProjectFilter("all")}
-          className={cn(
-            "rounded-full border px-2.5 py-1 text-xs transition-colors",
-            projectFilterId === "all"
-              ? "border-[var(--color-primary)] bg-[var(--color-accent)]"
-              : "border-[var(--color-card-border)] text-[var(--color-muted)]",
-          )}
+          className={cn("pill", projectFilterId === "all" && "pill-active")}
         >
           {t(lang, "projects_all")}
         </button>
         <button
           type="button"
           onClick={() => setProjectFilter(null)}
-          className={cn(
-            "rounded-full border px-2.5 py-1 text-xs transition-colors",
-            projectFilterId === null
-              ? "border-[var(--color-primary)] bg-[var(--color-accent)]"
-              : "border-[var(--color-card-border)] text-[var(--color-muted)]",
-          )}
+          className={cn("pill", projectFilterId === null && "pill-active")}
         >
           {t(lang, "projects_none")}
         </button>
@@ -50,10 +40,8 @@ export function ProjectBar() {
           <span
             key={p.id}
             className={cn(
-              "inline-flex items-center gap-1 rounded-full border px-2 py-1 text-xs",
-              projectFilterId === p.id
-                ? "border-[var(--color-primary)] bg-[var(--color-accent)]"
-                : "border-[var(--color-card-border)]",
+              "pill group pr-1.5",
+              projectFilterId === p.id && "pill-active",
             )}
           >
             <button
@@ -70,7 +58,7 @@ export function ProjectBar() {
             <button
               type="button"
               aria-label={t(lang, "projects_remove")}
-              className="text-[var(--color-muted)] hover:text-[var(--color-foreground)]"
+              className="rounded-full p-0.5 text-[var(--color-muted)] opacity-60 transition-opacity hover:text-[var(--color-foreground)] group-hover:opacity-100"
               onClick={() => removeProject(p.id)}
             >
               <X className="size-3" />
@@ -103,7 +91,7 @@ export function ProjectBar() {
             value={name}
             onChange={(e) => setName(e.target.value)}
             placeholder={t(lang, "projects_placeholder")}
-            className="h-9 flex-1 rounded-md border border-[var(--color-card-border)] bg-[var(--color-card)] px-3 text-sm outline-none focus-visible:ring-2 focus-visible:ring-[var(--color-ring)]"
+            className="field h-9 flex-1"
             autoFocus
           />
           <Button type="submit" size="sm" disabled={!name.trim()}>

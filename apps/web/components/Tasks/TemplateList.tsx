@@ -27,7 +27,7 @@ export function TemplateList() {
           return (
             <span
               key={tpl.id}
-              className="inline-flex items-center gap-1 rounded-full border border-[var(--color-card-border)] bg-[var(--color-card)] py-1 pl-2.5 pr-1 text-xs"
+              className="pill group py-1 pl-2.5 pr-1"
             >
               <button
                 type="button"

@@ -46,11 +46,13 @@ export function TaskList() {
   }, [tasks, projectFilterId]);
 
   return (
-    <Card className="mx-auto w-full max-w-lg">
+    <Card className="w-full">
       <CardHeader className="space-y-3">
-        <CardTitle className="text-lg">{t(lang, "tasks_title")}</CardTitle>
+        <div className="flex items-baseline justify-between gap-3">
+          <CardTitle className="text-lg">{t(lang, "tasks_title")}</CardTitle>
+          <FinishEstimate />
+        </div>
         <ProjectBar />
-        <FinishEstimate />
       </CardHeader>
       <CardContent className="space-y-4">
         <TemplateList />
@@ -71,7 +73,7 @@ export function TaskList() {
               value={label}
               onChange={(e) => setLabel(e.target.value)}
               placeholder={t(lang, "tasks_placeholder")}
-              className="h-10 w-full rounded-md border border-[var(--color-card-border)] bg-[var(--color-card)] px-3 text-sm outline-none ring-offset-[var(--color-background)] focus-visible:ring-2 focus-visible:ring-[var(--color-ring)]"
+              className="field"
             />
           </div>
           {activeProjects.length > 0 ? (
@@ -83,7 +85,7 @@ export function TaskList() {
                 onChange={(e) =>
                   setProjectId(e.target.value ? e.target.value : null)
                 }
-                className="h-10 w-full rounded-md border border-[var(--color-card-border)] bg-[var(--color-card)] px-3 text-sm outline-none focus-visible:ring-2 focus-visible:ring-[var(--color-ring)]"
+                className="field"
               >
                 <option value="">{t(lang, "projects_none")}</option>
                 {activeProjects.map((p) => (
@@ -97,7 +99,9 @@ export function TaskList() {
           <div className="space-y-2">
             <div className="flex items-center justify-between">
               <Label>{t(lang, "tasks_estimated")}</Label>
-              <span className="text-sm text-[var(--color-muted)]">{estimate}</span>
+              <span className="text-sm tabular-nums text-[var(--color-muted)]">
+                {estimate}
+              </span>
             </div>
             <Slider
               value={[estimate]}
@@ -113,123 +117,128 @@ export function TaskList() {
         </form>
 
         <div className="space-y-2">
+          {sorted.length === 0 ? (
+            <p className="inset-panel text-center text-sm text-[var(--color-muted)]">
+              {t(lang, "tasks_empty")}
+            </p>
+          ) : null}
           {sorted.map((task) => {
-              const active = activeId === task.id;
-              const project = task.projectId
-                ? projects.find((p) => p.id === task.projectId)
-                : null;
-              return (
-                <div
-                  key={task.id}
-                  className={cn(
-                    "flex flex-col gap-2 rounded-lg border border-[var(--color-card-border)] p-3 sm:flex-row sm:items-center sm:justify-between",
-                    active && "border-[var(--color-primary)] bg-[var(--color-accent)]",
-                    task.done && "opacity-60",
-                  )}
+            const active = activeId === task.id;
+            const project = task.projectId
+              ? projects.find((p) => p.id === task.projectId)
+              : null;
+            return (
+              <div
+                key={task.id}
+                className={cn(
+                  "flex flex-col gap-2 rounded-xl border border-[var(--color-card-border)] bg-[color-mix(in_oklch,var(--color-card),transparent_55%)] p-3 sm:flex-row sm:items-center sm:justify-between",
+                  active &&
+                    "border-[var(--color-primary)] bg-[color-mix(in_oklch,var(--color-accent),transparent_35%)]",
+                  task.done && "opacity-55",
+                )}
+              >
+                <button
+                  type="button"
+                  className="min-w-0 flex-1 text-left text-sm font-medium"
+                  onClick={() => setActiveTask(task.id)}
                 >
-                  <button
-                    type="button"
-                    className="text-left text-sm font-medium"
-                    onClick={() => setActiveTask(task.id)}
-                  >
-                    <span className="inline-flex items-center gap-2">
-                      {project ? (
-                        <span
-                          className="size-2.5 shrink-0 rounded-full"
-                          style={{ background: project.color }}
-                          title={project.name}
-                        />
-                      ) : null}
-                      <span className={cn(task.done && "line-through")}>
-                        {task.label}
-                      </span>
-                    </span>
-                    <span className="mt-1 block text-xs font-normal text-[var(--color-muted)]">
-                      {task.completedPomos}/{task.estimatedPomos}{" "}
-                      {t(lang, "tasks_sessions")}
-                      {project ? ` · ${project.name}` : ""}
-                    </span>
-                  </button>
-
-                  <div className="flex flex-wrap items-center gap-2">
-                    {activeProjects.length > 0 ? (
-                      <select
-                        value={task.projectId ?? ""}
-                        onChange={(e) =>
-                          updateTaskProject(
-                            task.id,
-                            e.target.value ? e.target.value : null,
-                          )
-                        }
-                        className="h-8 rounded-md border border-[var(--color-card-border)] bg-[var(--color-card)] px-2 text-xs"
-                        aria-label={t(lang, "tasks_project")}
-                      >
-                        <option value="">{t(lang, "projects_none")}</option>
-                        {activeProjects.map((p) => (
-                          <option key={p.id} value={p.id}>
-                            {p.name}
-                          </option>
-                        ))}
-                      </select>
+                  <span className="inline-flex items-center gap-2">
+                    {project ? (
+                      <span
+                        className="size-2.5 shrink-0 rounded-full"
+                        style={{ background: project.color }}
+                        title={project.name}
+                      />
                     ) : null}
-                    <div className="flex items-center gap-2">
-                      <span className="text-xs text-[var(--color-muted)]">
-                        {t(lang, "tasks_est_short")}
-                      </span>
-                      <Slider
-                        className="w-28"
-                        value={[task.estimatedPomos]}
-                        min={1}
-                        max={12}
-                        step={1}
-                        onValueChange={(v) =>
-                          updateTaskEstimate(
-                            task.id,
-                            v[0] ?? task.estimatedPomos,
-                          )
-                        }
-                      />
-                    </div>
-                    <Button
-                      type="button"
-                      size="icon"
-                      variant="ghost"
-                      aria-label={t(lang, "templates_save")}
-                      onClick={() => saveTemplateFromTask(task.id)}
-                    >
-                      <BookmarkPlus className="size-4" />
-                    </Button>
-                    <Button
-                      type="button"
-                      size="icon"
-                      variant="secondary"
-                      aria-label={
-                        task.done
-                          ? t(lang, "tasks_mark_not_done")
-                          : t(lang, "tasks_mark_done")
+                    <span className={cn(task.done && "line-through")}>
+                      {task.label}
+                    </span>
+                  </span>
+                  <span className="mt-1 block text-xs font-normal text-[var(--color-muted)]">
+                    {task.completedPomos}/{task.estimatedPomos}{" "}
+                    {t(lang, "tasks_sessions")}
+                  </span>
+                </button>
+
+                <div className="flex flex-wrap items-center gap-1.5">
+                  {activeProjects.length > 0 ? (
+                    <select
+                      value={task.projectId ?? ""}
+                      onChange={(e) =>
+                        updateTaskProject(
+                          task.id,
+                          e.target.value ? e.target.value : null,
+                        )
                       }
-                      onClick={() => toggleTaskDone(task.id)}
+                      className="field h-8 w-auto min-w-[6.5rem] px-2 text-xs"
+                      aria-label={t(lang, "tasks_project")}
                     >
-                      <Check
-                        className={cn(
-                          "size-4",
-                          task.done && "text-[var(--color-primary)]",
-                        )}
-                      />
-                    </Button>
-                    <Button
-                      type="button"
-                      size="icon"
-                      variant="ghost"
-                      aria-label={t(lang, "tasks_remove")}
-                      onClick={() => removeTask(task.id)}
-                    >
-                      <Trash2 className="size-4" />
-                    </Button>
+                      <option value="">{t(lang, "projects_none")}</option>
+                      {activeProjects.map((p) => (
+                        <option key={p.id} value={p.id}>
+                          {p.name}
+                        </option>
+                      ))}
+                    </select>
+                  ) : null}
+                  <div className="hidden items-center gap-2 sm:flex">
+                    <span className="text-xs text-[var(--color-muted)]">
+                      {t(lang, "tasks_est_short")}
+                    </span>
+                    <Slider
+                      className="w-24"
+                      value={[task.estimatedPomos]}
+                      min={1}
+                      max={12}
+                      step={1}
+                      onValueChange={(v) =>
+                        updateTaskEstimate(
+                          task.id,
+                          v[0] ?? task.estimatedPomos,
+                        )
+                      }
+                    />
                   </div>
+                  <Button
+                    type="button"
+                    size="icon"
+                    variant="ghost"
+                    aria-label={t(lang, "templates_save")}
+                    onClick={() => saveTemplateFromTask(task.id)}
+                  >
+                    <BookmarkPlus className="size-4" />
+                  </Button>
+                  <Button
+                    type="button"
+                    size="icon"
+                    variant="secondary"
+                    aria-label={
+                      task.done
+                        ? t(lang, "tasks_mark_not_done")
+                        : t(lang, "tasks_mark_done")
+                    }
+                    onClick={() => toggleTaskDone(task.id)}
+                  >
+                    <Check
+                      className={cn(
+                        "size-4",
+                        task.done && "text-[var(--color-primary)]",
+                      )}
+                    />
+                  </Button>
+                  <Button
+                    type="button"
+                    size="icon"
+                    variant="ghost"
+                    aria-label={t(lang, "tasks_remove")}
+                    onClick={() => removeTask(task.id)}
+                  >
+                    <Trash2 className="size-4" />
+                  </Button>
                 </div>
-              );
-            })}
+              </div>
+            );
+          })}
         </div>
       </CardContent>
     </Card>

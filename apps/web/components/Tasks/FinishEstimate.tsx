@@ -22,7 +22,7 @@ export function FinishEstimate() {
   });
 
   return (
-    <p className="text-center text-sm text-[var(--color-muted)]">
+    <p className="text-right text-xs text-[var(--color-muted)] sm:text-sm">
       {t(lang, "eta_label", { count: open, time: timeStr })}
     </p>
   );

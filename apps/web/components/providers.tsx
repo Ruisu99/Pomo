@@ -54,6 +54,7 @@ export function AppProviders({ children }: { children: React.ReactNode }) {
     const root = document.documentElement;
     root.style.setProperty("--app-bg", bgSolid);
     if (bgPreset === "pixelCity") {
+      root.style.setProperty("--app-bg", "#1a1028");
       root.style.setProperty("--app-bg-image", "none");
       root.style.setProperty("--app-footer-color", "rgba(255,255,255,0.82)");
     } else if (bgPreset === "pomoRed") {

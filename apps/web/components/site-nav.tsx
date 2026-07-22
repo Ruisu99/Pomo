@@ -18,8 +18,8 @@ export function SiteNav() {
     { href: "/tutorial", label: t(lang, "nav_tutorial"), icon: BookOpen },
   ];
   return (
-    <div className="flex flex-wrap items-center gap-2">
-      <nav className="glass liquid-glass flex items-center gap-1 rounded-2xl p-1">
+    <div className="flex flex-wrap items-center justify-end gap-2">
+      <nav className="glass flex items-center gap-0.5 rounded-2xl p-1">
         {links.map(({ href, label, icon: Icon }) => {
           const active = pathname === href;
           return (
@@ -27,39 +27,41 @@ export function SiteNav() {
               key={href}
               href={href}
               className={cn(
-                "inline-flex items-center gap-2 rounded-xl px-3 py-2 text-sm font-medium transition-colors",
+                "inline-flex items-center gap-2 rounded-xl px-2.5 py-2 text-sm font-medium transition-colors sm:px-3",
                 active
                   ? "bg-[color-mix(in_oklch,var(--color-primary),white_12%)] text-[var(--color-primary-foreground)] shadow-[0_14px_34px_-24px_rgba(0,0,0,0.8)]"
-                  : "text-[var(--color-muted)] hover:bg-[color-mix(in_oklch,white,transparent_82%)] hover:text-[var(--color-foreground)]",
+                  : "text-[var(--color-foreground)]/70 hover:bg-[color-mix(in_oklch,white,transparent_84%)] hover:text-[var(--color-foreground)]",
               )}
             >
               <Icon className="size-4" />
-              {label}
+              <span className="hidden sm:inline">{label}</span>
             </Link>
           );
         })}
       </nav>
-      <BackgroundQuickPicker />
-      <div
-        className="glass liquid-glass flex items-center rounded-2xl p-1"
-        role="group"
-        aria-label={t(lang, "settings_language")}
-      >
-        {(["en", "de"] as const).map((code) => (
-          <button
-            key={code}
-            type="button"
-            onClick={() => patchSettings({ language: code })}
-            className={cn(
-              "rounded-xl px-2.5 py-2 text-xs font-semibold uppercase tracking-wide transition-colors",
-              lang === code
-                ? "bg-[var(--color-primary)] text-[var(--color-primary-foreground)]"
-                : "text-[var(--color-muted)] hover:text-[var(--color-foreground)]",
-            )}
-          >
-            {code}
-          </button>
-        ))}
+      <div className="glass flex items-center gap-0.5 rounded-2xl p-1">
+        <BackgroundQuickPicker embedded />
+        <div
+          className="flex items-center"
+          role="group"
+          aria-label={t(lang, "settings_language")}
+        >
+          {(["en", "de"] as const).map((code) => (
+            <button
+              key={code}
+              type="button"
+              onClick={() => patchSettings({ language: code })}
+              className={cn(
+                "rounded-xl px-2.5 py-2 text-xs font-semibold uppercase tracking-wide transition-colors",
+                lang === code
+                  ? "bg-[var(--color-primary)] text-[var(--color-primary-foreground)]"
+                  : "text-[var(--color-muted)] hover:text-[var(--color-foreground)]",
+              )}
+            >
+              {code}
+            </button>
+          ))}
+        </div>
       </div>
     </div>
   );

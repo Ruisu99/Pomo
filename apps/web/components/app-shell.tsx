@@ -8,25 +8,27 @@ import { useAppStore } from "@/store/app-store";
 export function AppShell({ children }: { children: React.ReactNode }) {
   const lang = useAppStore((s) => s.settings.language);
   return (
-    <div className="mx-auto flex min-h-dvh w-full max-w-3xl flex-col gap-8 px-4 py-8 sm:py-10">
-      <header className="flex flex-col items-start justify-between gap-4 sm:flex-row sm:items-center">
+    <div className="mx-auto flex min-h-dvh w-full max-w-3xl flex-col gap-7 px-4 py-6 sm:gap-8 sm:py-10">
+      <header className="flex items-center justify-between gap-3">
         <div className="leading-tight">
           <Image
             src="/logo_wordmark.png"
             alt="Pomo"
             width={420}
             height={140}
-            className="h-16 w-auto sm:h-20"
+            className="h-12 w-auto sm:h-16"
             priority
           />
         </div>
         <SiteNav />
       </header>
       <main className="flex-1">{children}</main>
-      <footer className="text-center text-xs" style={{ color: "var(--app-footer-color)" }}>
+      <footer
+        className="text-center text-xs"
+        style={{ color: "var(--app-footer-color)" }}
+      >
         {t(lang, "footer")}
       </footer>
     </div>
   );
 }
-

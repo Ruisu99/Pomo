@@ -1,7 +1,7 @@
 "use client";
 
-import { motion } from "framer-motion";
-import { useMemo } from "react";
+import { motion, useReducedMotion } from "framer-motion";
+import { useMemo, type ReactNode } from "react";
 import { remainingMs } from "@pomodoro/core";
 import { useAppStore } from "@/store/app-store";
 
@@ -9,9 +9,16 @@ const R = 120;
 const STROKE = 10;
 const C = 2 * Math.PI * R;
 
-export function TimerRing({ nowMs }: { nowMs: number }) {
+export function TimerRing({
+  nowMs,
+  children,
+}: {
+  nowMs: number;
+  children?: ReactNode;
+}) {
   const timer = useAppStore((s) => s.timer);
   const settings = useAppStore((s) => s.settings);
+  const reduceMotion = useReducedMotion();
 
   const { rem, total } = useMemo(() => {
     const totalMs =
@@ -40,15 +47,15 @@ export function TimerRing({ nowMs }: { nowMs: number }) {
       >
         <defs>
           <linearGradient id="gradWork" x1="0" y1="0" x2="1" y2="1">
-            <stop offset="0" stopColor="oklch(0.7 0.22 25)" />
-            <stop offset="1" stopColor="oklch(0.58 0.22 18)" />
+            <stop offset="0" stopColor="oklch(0.72 0.2 25)" />
+            <stop offset="1" stopColor="oklch(0.56 0.22 18)" />
           </linearGradient>
           <linearGradient id="gradBreak" x1="0" y1="0" x2="1" y2="1">
-            <stop offset="0" stopColor="oklch(0.74 0.16 150)" />
-            <stop offset="1" stopColor="oklch(0.62 0.14 200)" />
+            <stop offset="0" stopColor="oklch(0.74 0.14 155)" />
+            <stop offset="1" stopColor="oklch(0.62 0.12 205)" />
           </linearGradient>
           <filter id={glowId} x="-50%" y="-50%" width="200%" height="200%">
-            <feGaussianBlur stdDeviation="2.4" result="blur" />
+            <feGaussianBlur stdDeviation="2.2" result="blur" />
             <feColorMatrix
               in="blur"
               type="matrix"
@@ -56,7 +63,7 @@ export function TimerRing({ nowMs }: { nowMs: number }) {
                 1 0 0 0 0
                 0 1 0 0 0
                 0 0 1 0 0
-                0 0 0 0.7 0"
+                0 0 0 0.55 0"
               result="glow"
             />
             <feMerge>
@@ -69,7 +76,7 @@ export function TimerRing({ nowMs }: { nowMs: number }) {
           cx={R + STROKE}
           cy={R + STROKE}
           r={R}
-          stroke="color-mix(in_oklch,var(--color-foreground),transparent 82%)"
+          stroke="color-mix(in_oklch,var(--color-foreground),transparent 86%)"
           strokeWidth={STROKE}
           fill="none"
         />
@@ -85,9 +92,18 @@ export function TimerRing({ nowMs }: { nowMs: number }) {
           filter={`url(#${glowId})`}
           initial={false}
           animate={{ strokeDashoffset: offset }}
-          transition={{ type: "tween", duration: 0.35, ease: "easeOut" }}
+          transition={
+            reduceMotion
+              ? { duration: 0 }
+              : { type: "tween", duration: 0.35, ease: "easeOut" }
+          }
         />
       </svg>
+      {children ? (
+        <div className="pointer-events-none absolute inset-0 flex flex-col items-center justify-center px-6 text-center">
+          {children}
+        </div>
+      ) : null}
     </div>
   );
 }

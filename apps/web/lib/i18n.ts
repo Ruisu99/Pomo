@@ -71,6 +71,8 @@ const en: Dict = {
   ambient_autoplay_desc: "Start the focus stream when a session starts.",
   ambient_loading: "Loading stream…",
   ambient_open_youtube: "Open on YouTube",
+  ambient_show_video: "Show video",
+  ambient_hide_video: "Hide video",
 
   focus_mode_title: "Focus mode",
   focus_mode_desc: "Auto cycle + optional site blocking.",
@@ -127,6 +129,7 @@ const en: Dict = {
   settings_background_upload: "Upload background image",
   settings_background_remove: "Remove custom image",
   bg_picker_aria: "Change background",
+  bg_picker_close: "Close",
   session_settings_title: "Session settings",
   session_settings_summary: "Cycle total: {total} min · Productive: {productive} min",
   session_settings_work: "Work",
@@ -243,6 +246,8 @@ const de: Dict = {
   ambient_autoplay_desc: "Focus-Stream starten, wenn eine Session beginnt.",
   ambient_loading: "Stream lädt…",
   ambient_open_youtube: "Auf YouTube öffnen",
+  ambient_show_video: "Video anzeigen",
+  ambient_hide_video: "Video ausblenden",
 
   stats_streak: "Serie",
   stats_days_in_a_row: "Tage am Stück",
@@ -292,6 +297,7 @@ const de: Dict = {
   settings_background_upload: "Hintergrundbild hochladen",
   settings_background_remove: "Eigenes Bild entfernen",
   bg_picker_aria: "Hintergrund ändern",
+  bg_picker_close: "Schließen",
   session_settings_title: "Session-Einstellungen",
   session_settings_summary: "Zyklus: {total} Min · Produktiv: {productive} Min",
   session_settings_work: "Arbeit",
