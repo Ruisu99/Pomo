@@ -404,6 +404,7 @@ export const useAppStore = create<AppState>((set, get) => ({
     if (timer.runState !== "running") return;
     set({ timer: pauseTimer(timer, settings, Date.now()) });
     scheduleSave(get);
+    pauseLofi();
   },
 
   resume: () => {

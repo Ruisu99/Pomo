@@ -14,9 +14,9 @@ export function AppShell({ children }: { children: React.ReactNode }) {
           <Image
             src="/logo_wordmark.png"
             alt="Pomo"
-            width={420}
-            height={140}
-            className="h-12 w-auto sm:h-16"
+            width={510}
+            height={667}
+            className="h-14 w-auto sm:h-[4.5rem]"
             priority
           />
         </div>

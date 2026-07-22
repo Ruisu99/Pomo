@@ -30,7 +30,7 @@ export function AmbientDock() {
   const hostRef = useRef<HTMLDivElement>(null);
   const [playing, setPlaying] = useState(false);
   const [ready, setReady] = useState(false);
-  const [showVideo, setShowVideo] = useState(false);
+  const [showVideo, setShowVideo] = useState(true);
 
   const trackId = settings.ambientTrackId;
   const watchUrl = STREAMS[trackId].watchUrl;
