@@ -201,6 +201,7 @@ export function SettingsDialog() {
             <div className="grid grid-cols-3 gap-2">
               {(
                 [
+                  { id: "pixelCity", label: t(lang, "settings_background_pixel") },
                   { id: "pomoRed", label: t(lang, "settings_background_pomo") },
                   { id: "pomoSlate", label: t(lang, "settings_background_slate") },
                   { id: "pomoGold", label: t(lang, "settings_background_gold") },

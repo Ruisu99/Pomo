@@ -2,6 +2,7 @@
 
 import { useEffect } from "react";
 import { useAppStore } from "@/store/app-store";
+import { VideoBackground } from "@/components/VideoBackground";
 
 const POMO_RED_SVG = `<svg xmlns="http://www.w3.org/2000/svg" width="1440" height="1440" preserveAspectRatio="none" viewBox="0 0 1440 1440"><g mask="url(#m)" fill="none"><rect width="1440" height="1440" x="0" y="0" fill="rgba(223, 60, 60, 1)"/><path d="M0,643.083C124.35,652.364,259.569,632.721,355.19,552.686C447.872,475.111,469.083,344.587,497.092,227.014C520.712,127.865,513.106,29.045,504.124,-72.482C494.609,-180.033,515.701,-304.033,443.045,-383.901C370.484,-463.665,238.77,-432.583,139.102,-473.738C22.594,-521.847,-64.895,-664.7,-189.404,-645.052C-311.703,-625.752,-364.298,-479.325,-441.064,-382.184C-514.166,-289.679,-603.895,-205.717,-627.82,-90.267C-652.445,28.561,-630.222,154.553,-574.649,262.433C-520.469,367.609,-421.309,436.756,-322.675,502.092C-222.796,568.252,-119.472,634.166,0,643.083\" fill=\"#c32020\"/><path d=\"M1440 2014.288C1542.317 1987.7359999999999 1612.633 1902.917 1707.3899999999999 1856.067 1818.558 1801.1019999999999 1976.835 1820.125 2043.806 1715.749 2110.078 1612.462 2051.325 1475.972 2028.655 1355.364 2006.9099999999999 1239.679 1994.065 1115.6 1914.665 1028.701 1836.01 942.617 1712.453 925.672 1601.97 888.379 1486.583 849.43 1371.161 773.36 1253.723 805.6 1135.979 837.924 1064.127 953.855 995.5319999999999 1054.866 933.168 1146.701 899.993 1250.399 877.803 1359.1680000000001 854.371 1474.025 831.299 1590.613 863.221 1703.406 898.237 1827.133 952.3779999999999 1961.615 1065.57 2022.625 1177.7359999999999 2083.082 1316.663 2046.295 1440 2014.288\" fill=\"#e76d6d\"/></g><defs><mask id=\"m\"><rect width=\"1440\" height=\"1440\" fill=\"#fff\"/></mask></defs></svg>`;
 
@@ -52,7 +53,10 @@ export function AppProviders({ children }: { children: React.ReactNode }) {
   useEffect(() => {
     const root = document.documentElement;
     root.style.setProperty("--app-bg", bgSolid);
-    if (bgPreset === "pomoRed") {
+    if (bgPreset === "pixelCity") {
+      root.style.setProperty("--app-bg-image", "none");
+      root.style.setProperty("--app-footer-color", "rgba(255,255,255,0.82)");
+    } else if (bgPreset === "pomoRed") {
       root.style.setProperty("--app-bg-image", svgToDataUrl(POMO_RED_SVG));
       root.style.setProperty("--app-footer-color", "rgba(255,255,255,0.78)");
     } else if (bgPreset === "pomoSlate") {
@@ -70,7 +74,12 @@ export function AppProviders({ children }: { children: React.ReactNode }) {
     }
   }, [bgPreset, bgSolid, bgImage]);
 
-  return <>{children}</>;
+  return (
+    <>
+      <VideoBackground />
+      {children}
+    </>
+  );
 }
 
 export function TimerSync() {

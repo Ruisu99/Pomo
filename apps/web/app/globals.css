@@ -14,16 +14,16 @@
   --color-primary-foreground: oklch(0.99 0 0);
   --color-ring: oklch(0.62 0.22 25);
   --color-accent: oklch(0.95 0.04 25);
-  --radius-lg: 1.25rem;
+  --radius-lg: 1.35rem;
 }
 
 @media (prefers-color-scheme: dark) {
   :root:not(.light) {
     --color-background: oklch(0.16 0.02 260);
     --color-foreground: oklch(0.96 0.01 260);
-    --color-muted: oklch(0.68 0.03 260);
-    --color-card: oklch(0.2 0.02 260);
-    --color-card-border: oklch(0.32 0.02 260);
+    --color-muted: oklch(0.72 0.02 260);
+    --color-card: oklch(0.22 0.02 260);
+    --color-card-border: oklch(0.4 0.02 260);
     --color-primary: oklch(0.66 0.22 25);
     --color-primary-foreground: oklch(0.12 0.02 260);
     --color-ring: oklch(0.66 0.22 25);
@@ -34,9 +34,9 @@
 :root.dark {
   --color-background: oklch(0.16 0.02 260);
   --color-foreground: oklch(0.96 0.01 260);
-  --color-muted: oklch(0.68 0.03 260);
-  --color-card: oklch(0.2 0.02 260);
-  --color-card-border: oklch(0.32 0.02 260);
+  --color-muted: oklch(0.72 0.02 260);
+  --color-card: oklch(0.22 0.02 260);
+  --color-card-border: oklch(0.4 0.02 260);
   --color-primary: oklch(0.66 0.22 25);
   --color-primary-foreground: oklch(0.12 0.02 260);
   --color-ring: oklch(0.66 0.22 25);
@@ -70,19 +70,109 @@ body::before {
   background-position: center;
 }
 
-/* subtle glass look for cards / docks */
-@supports (backdrop-filter: blur(12px)) {
-  .glass {
-    backdrop-filter: blur(14px) saturate(1.15);
-  }
-}
-
-/* calmer focus composition */
 :root {
   --focus-glow: color-mix(in oklch, var(--color-primary) 18%, transparent);
+  --glass-tint: color-mix(in oklch, white 14%, transparent);
+  --glass-tint-strong: color-mix(in oklch, white 22%, transparent);
+  --glass-stroke: color-mix(in oklch, white 38%, transparent);
+  --glass-stroke-soft: color-mix(in oklch, white 16%, transparent);
+  --glass-shadow: 0 10px 40px -18px rgba(0, 0, 0, 0.55);
 }
 
 .dark,
 :root:not(.light) {
   --focus-glow: color-mix(in oklch, var(--color-primary) 28%, transparent);
+  --glass-tint: color-mix(in oklch, white 8%, transparent);
+  --glass-tint-strong: color-mix(in oklch, white 14%, transparent);
+  --glass-stroke: color-mix(in oklch, white 28%, transparent);
+  --glass-stroke-soft: color-mix(in oklch, white 12%, transparent);
+  --glass-shadow: 0 14px 48px -16px rgba(0, 0, 0, 0.7);
+}
+
+.light {
+  --glass-tint: color-mix(in oklch, white 42%, transparent);
+  --glass-tint-strong: color-mix(in oklch, white 55%, transparent);
+  --glass-stroke: color-mix(in oklch, white 70%, transparent);
+  --glass-stroke-soft: color-mix(in oklch, white 35%, transparent);
+  --glass-shadow: 0 12px 36px -20px rgba(20, 16, 40, 0.28);
+}
+
+/*
+ * Liquid Glass (iOS/macOS 26–inspired)
+ * Frost + specular rim everywhere; Chromium also gets SVG refraction.
+ */
+.glass,
+.liquid-glass {
+  position: relative;
+  isolation: isolate;
+  background:
+    linear-gradient(
+      155deg,
+      color-mix(in oklch, white 28%, transparent) 0%,
+      var(--glass-tint) 38%,
+      color-mix(in oklch, white 6%, transparent) 100%
+    ),
+    var(--glass-tint-strong);
+  border: 1px solid var(--glass-stroke-soft);
+  box-shadow:
+    var(--glass-shadow),
+    inset 0 1px 0 color-mix(in oklch, white 55%, transparent),
+    inset 0 -1px 0 color-mix(in oklch, white 12%, transparent),
+    inset 1px 0 0 color-mix(in oklch, white 18%, transparent),
+    inset -1px 0 0 color-mix(in oklch, white 10%, transparent);
+  overflow: hidden;
+}
+
+.glass::before,
+.liquid-glass::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  pointer-events: none;
+  z-index: 0;
+  background:
+    radial-gradient(
+      120% 80% at 12% -10%,
+      color-mix(in oklch, white 45%, transparent),
+      transparent 55%
+    ),
+    linear-gradient(
+      180deg,
+      color-mix(in oklch, white 18%, transparent),
+      transparent 42%
+    );
+  opacity: 0.9;
+  mix-blend-mode: soft-light;
+}
+
+.glass > *,
+.liquid-glass > * {
+  position: relative;
+  z-index: 1;
+}
+
+@supports ((-webkit-backdrop-filter: blur(1px)) or (backdrop-filter: blur(1px))) {
+  .glass,
+  .liquid-glass {
+    -webkit-backdrop-filter: blur(22px) saturate(1.65) brightness(1.08);
+    backdrop-filter: blur(22px) saturate(1.65) brightness(1.08);
+  }
+}
+
+/* Real backdrop refraction — Chromium only for now */
+@supports (backdrop-filter: url(#liquid-glass-refract)) {
+  .glass,
+  .liquid-glass {
+    -webkit-backdrop-filter: blur(6px) saturate(1.55) brightness(1.06) url(#liquid-glass-refract);
+    backdrop-filter: blur(6px) saturate(1.55) brightness(1.06) url(#liquid-glass-refract);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .glass,
+  .liquid-glass {
+    -webkit-backdrop-filter: blur(14px) saturate(1.2);
+    backdrop-filter: blur(14px) saturate(1.2);
+  }
 }

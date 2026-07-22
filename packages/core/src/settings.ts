@@ -10,7 +10,7 @@ export const DEFAULT_SETTINGS: Settings = {
   soundVolume: 0.6,
   theme: "system",
   language: "en",
-  backgroundPreset: "pomoRed",
+  backgroundPreset: "pixelCity",
   backgroundSolid: "#df3c3c",
   backgroundImageDataUrl: null,
   ambientEnabled: false,
@@ -30,10 +30,11 @@ export function clampSettings(partial: Partial<Settings> & Record<string, unknow
     s.backgroundPreset === "pomoRed" ||
     s.backgroundPreset === "pomoSlate" ||
     s.backgroundPreset === "pomoGold" ||
+    s.backgroundPreset === "pixelCity" ||
     s.backgroundPreset === "customImage" ||
     s.backgroundPreset === "solid"
       ? s.backgroundPreset
-      : "solid";
+      : "pixelCity";
 
   return {
     workDuration: Math.max(60, Math.min(120 * 60, s.workDuration)),

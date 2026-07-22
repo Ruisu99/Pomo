@@ -46,7 +46,7 @@ export function TaskList() {
   }, [tasks, projectFilterId]);
 
   return (
-    <Card className="mx-auto w-full max-w-lg border-[var(--color-card-border)]">
+    <Card className="mx-auto w-full max-w-lg">
       <CardHeader className="space-y-3">
         <CardTitle className="text-lg">{t(lang, "tasks_title")}</CardTitle>
         <ProjectBar />

@@ -80,8 +80,7 @@ export function AmbientDock() {
   return (
     <div
       className={cn(
-        "glass mx-auto w-full max-w-lg overflow-hidden rounded-2xl border border-[var(--color-card-border)]",
-        "bg-[color-mix(in_oklch,var(--color-card),transparent_25%)] shadow-sm",
+        "glass liquid-glass mx-auto w-full max-w-lg overflow-hidden rounded-2xl",
       )}
     >
       <div className="flex items-start justify-between gap-3 px-4 pt-3">

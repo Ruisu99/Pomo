@@ -8,6 +8,7 @@ import {
 } from "@/components/FocusExtras";
 import { HtmlLangSync } from "@/components/HtmlLangSync";
 import { JsonLd } from "@/components/JsonLd";
+import { LiquidGlassFilter } from "@/components/LiquidGlassFilter";
 import {
   SITE_DESCRIPTION_DE,
   SITE_DESCRIPTION_EN,
@@ -114,6 +115,7 @@ export default function RootLayout({
         className={`${geistSans.variable} ${geistMono.variable} min-h-dvh bg-[var(--color-background)] text-[var(--color-foreground)] antialiased`}
       >
         <AppProviders>
+          <LiquidGlassFilter />
           <TimerSync />
           <KeyboardShortcuts />
           <DocumentTitleSync />

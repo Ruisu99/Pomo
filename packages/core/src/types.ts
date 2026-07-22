@@ -46,6 +46,7 @@ export type BackgroundPreset =
   | "pomoRed"
   | "pomoSlate"
   | "pomoGold"
+  | "pixelCity"
   | "customImage";
 
 export type Settings = {

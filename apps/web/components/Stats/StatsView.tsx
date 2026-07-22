@@ -87,7 +87,7 @@ export function StatsView() {
       </div>
 
       <div className="grid gap-4 sm:grid-cols-3">
-        <Card className="border-[var(--color-card-border)]">
+        <Card>
           <CardHeader className="pb-2">
             <CardTitle className="text-sm font-medium text-[var(--color-muted)]">
               {t(lang, "stats_streak")}
@@ -100,7 +100,7 @@ export function StatsView() {
             </p>
           </CardContent>
         </Card>
-        <Card className="border-[var(--color-card-border)]">
+        <Card>
           <CardHeader className="pb-2">
             <CardTitle className="text-sm font-medium text-[var(--color-muted)]">
               {t(lang, "stats_today")}
@@ -114,7 +114,7 @@ export function StatsView() {
             </p>
           </CardContent>
         </Card>
-        <Card className="border-[var(--color-card-border)]">
+        <Card>
           <CardHeader className="pb-2">
             <CardTitle className="text-sm font-medium text-[var(--color-muted)]">
               {t(lang, "stats_this_week")}
@@ -131,7 +131,7 @@ export function StatsView() {
       </div>
 
       <div className="grid gap-4 sm:grid-cols-2">
-        <Card className="border-[var(--color-card-border)]">
+        <Card>
           <CardHeader className="pb-2">
             <CardTitle className="text-sm font-medium text-[var(--color-muted)]">
               {t(lang, "stats_month_minutes")}
@@ -144,7 +144,7 @@ export function StatsView() {
             </p>
           </CardContent>
         </Card>
-        <Card className="border-[var(--color-card-border)]">
+        <Card>
           <CardHeader className="pb-2">
             <CardTitle className="text-sm font-medium text-[var(--color-muted)]">
               {t(lang, "stats_week_minutes")}
@@ -159,7 +159,7 @@ export function StatsView() {
         </Card>
       </div>
 
-      <Card className="border-[var(--color-card-border)]">
+      <Card>
         <CardHeader>
           <CardTitle className="text-lg">{t(lang, "stats_last_7_days")}</CardTitle>
         </CardHeader>
@@ -199,7 +199,7 @@ export function StatsView() {
       </Card>
 
       {byProject.length === 0 ? null : (
-      <Card className="border-[var(--color-card-border)]">
+      <Card>
         <CardHeader>
           <CardTitle className="text-lg">{t(lang, "stats_by_project")}</CardTitle>
         </CardHeader>

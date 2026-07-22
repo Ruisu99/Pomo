@@ -57,7 +57,7 @@ export function TimerPanel() {
     timer.phase === "work" && currentWorkIndex >= totalInCycle;
 
   return (
-    <Card className="w-full border-[var(--color-card-border)] shadow-[0_0_0_1px_var(--focus-glow)]">
+    <Card className="w-full">
       <CardHeader className="flex flex-row items-start justify-between gap-4 space-y-0">
         <div>
           <p className="text-sm font-medium text-[var(--color-muted)]">
